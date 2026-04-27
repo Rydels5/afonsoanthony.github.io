@@ -77,7 +77,7 @@
                 <h3 class="shelf-title tech-title">TECH & MOTEURS</h3>
                 <div class="game-box-container">
                     <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">UNITY</span></div><div class="box-face side"></div></div></div>
-                    <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">C# / VISUAL SCRIPTING</span></div><div class="box-face side"></div></div></div>
+                    <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">VS / VISUAL SCRIPTING</span></div><div class="box-face side"></div></div></div>
                     <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">GIT / FORK</span></div><div class="box-face side"></div></div></div>
                 </div>
             </div>
@@ -115,11 +115,21 @@
                 <h3>FLING</h3>
                 <ul class="project-tags"><li>10 Étudiants</li><li>3 Mois</li><li>Unity</li></ul>
                 <p>Un jeu de plateforme 2.5D basé sur une mécanique de dash dans les ennemis.</p>
-                <div class="project-roles"><span>LEVEL DESIGN</span><span>GAME DESIGN</span><span>C#</span><span>Fmod</span></div>
+                <div class="project-roles"><span>LEVEL DESIGN</span><span>GAME DESIGN</span><span>VS</span><span>Fmod</span></div>
             </div>
             <div class="project-image-container"><img src="fling1.png" alt="Visuel Fling" class="project-img"></div>
         </div>
 
+        <div class="project-card reveal" onclick="openModal('modal-shapeshooter')">
+            <div class="project-info">
+                <span class="project-category">SHOOTER MOBILE</span>
+                <h3>SPEC WAR</h3>
+                <ul class="project-tags"><li>8 Étudiants</li><li>1 Mois</li><li>Unity</li></ul>
+                <p>Un jeu de tir frénétique mobile basé sur les formes géométriques</p>
+                <div class="project-roles"><span>GAME DESIGN</span><span>ÉQUILIBRAGE</span><span>MONÉTISATION</span></div>
+            </div>
+            <div class="project-image-container"><img src="shape1.png" alt="Visuel Spec War" class="project-img"></div>
+        </div>
         <div class="project-card reveal" onclick="openModal('modal-killer')">
             <div class="project-info">
                 <span class="project-category">ACTION / BRAWLER</span>
@@ -137,7 +147,7 @@
                 <h3>Kenjiro</h3>
                 <ul class="project-tags"><li>Projet Solo</li><li>3 Mois</li><li>Unity</li></ul>
                 <p>Jeu de combats à un seul bouton basé sur le contre, la parade et l'attaque.</p>
-                <div class="project-roles"><span>GAME DESIGN</span><span>LEVEL DESIGN</span><span>C#</span><span>3C</span></div>
+                <div class="project-roles"><span>GAME DESIGN</span><span>LEVEL DESIGN</span><span>VS</span><span>3C</span></div>
             </div>
             <div class="project-image-container"><img src="kenjiro.png" alt="Visuel Kenjiro" class="project-img"></div>
         </div>
@@ -161,7 +171,7 @@
                 <span class="date" style="color: var(--gray-color); font-size: 0.9rem;">2024 - PRÉSENT</span>
                 <h3 style="margin: 0.5rem 0; color: var(--accent-color);">Master en Game Design</h3>
                 <p style="color: var(--gray-color);"><strong>ISART Digital Paris</strong></p>
-                <p>Expérience de production complète sur Unity (C#). Spécialisation en <strong>Game Feel et UX</strong>.</p>
+                <p>Expérience de production complète de jeux vidéo et de jeux de plateau</p>
             </div>
             <div class="timeline-item" style="margin-bottom: 2rem; padding-left: 1rem; border-left: 2px solid #ff00c1;">
                 <span class="date" style="color: var(--gray-color); font-size: 0.9rem;">2022 - 2024</span>
@@ -180,7 +190,7 @@
             <a href="mailto:a.afonso@student.isartdigital.com" class="email-link">a.afonso@student.isartdigital.com</a>
             <div class="social-links" style="margin-top: 3rem;">
                 <a href="https://www.linkedin.com/in/anthony-afonso-a9272225b/">LinkedIn</a>
-         <a href="STAGECV.pdf" target="_blank">Télécharger mon CV (PDF)</a>
+                <a href="STAGECV.pdf" target="_blank">Télécharger mon CV (PDF)</a>
             </div>
         </div>
     </section>
@@ -210,7 +220,26 @@
                     </a>
                 </div>
             </div>
+            
+            <div id="modal-shapeshooter" class="modal-project-content" style="display: none;">
+                <h2 class="modal-title cyan-text">SPEC WAR</h2>
+                <div class="modal-divider cyan-bg"></div>
+                
+                <div class="video-container cyan-border">
+                    <video controls class="project-video">
+                        <source src="ShapeTrailer.mp4" type="video/mp4">
+                        Votre navigateur ne supporte pas la balise vidéo.
+                    </video>
+                </div>
 
+                <p>SPEC WAR est un shooter mobile frénétique free to play en vue isométrique</p>
+                
+                <div class="modal-link-container">
+                    <a href="#" target="_blank" class="itch-link cyan-link">
+                        <i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO
+                    </a>
+                </div>
+            </div>
             <div id="modal-killer" class="modal-project-content" style="display: none;">
                 <h2 class="modal-title magenta-text">KILLER SHARK FROM OUTER SPACE</h2>
                 <div class="modal-divider magenta-bg"></div>
@@ -264,8 +293,6 @@
                 – Lancez des malédictions<br>
                 – Aidez votre allié<br><br>
                 Le tout sur un plateau où la symétrie est votre seul moyen d’interaction.</p>
-                
-  
             </div>
 
         </div>
