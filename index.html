@@ -4,297 +4,344 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anthony AFONSO | Game & Level Designer</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="booting">
 
-    <div class="static-neon-bg">
-        <div class="tracer cyan t1"></div><div class="tracer magenta t2"></div>
-        <div class="tracer cyan t3"></div><div class="tracer magenta t4"></div>
-        <div class="tracer cyan t5"></div><div class="tracer magenta t6"></div>
-        <div class="tracer cyan t7"></div><div class="tracer magenta t8"></div>
-        <div class="tracer cyan t9"></div><div class="tracer magenta t10"></div>
-        <div class="tracer cyan t11"></div><div class="tracer magenta t12"></div>
-        <div class="tracer cyan t13"></div>
+    <!-- CURSEURS INFAILLIBLES -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- UI GAMIFICATION -->
+    <div id="xp-bar-container"><div id="xp-bar"></div></div>
+    
+    <div id="achievement-toast">
+        <i class="fa-solid fa-trophy"></i>
+        <div>
+            <h4 class="lang-txt" data-fr="SUCCÈS DÉVERROUILLÉ" data-en="ACHIEVEMENT UNLOCKED">SUCCÈS DÉVERROUILLÉ</h4>
+            <p id="achievement-text" class="lang-txt" data-fr="A exploré le portfolio à 100% !" data-en="Explored the portfolio to 100% !">A exploré le portfolio à 100% !</p>
+        </div>
+    </div>
+    
+    <!-- MINIMAP NAV -->
+    <div id="mini-map">
+        <div class="map-dot active" data-target="#about"></div>
+        <div class="map-dot" data-target="#skills"></div>
+        <div class="map-dot" data-target="#projects"></div>
+        <div class="map-dot" data-target="#background"></div>
+        <div class="map-dot" data-target="#contact"></div>
     </div>
 
-    <nav id="navbar">
-        <ul class="nav-links">
-            <li><a href="#about" data-label="Accueil"><i class="fa-solid fa-house"></i></a></li>
-            <li><a href="#skills" data-label="Compétences"><i class="fa-solid fa-gamepad"></i></a></li>
-            <li><a href="#projects" data-label="Projets"><i class="fa-solid fa-layer-group"></i></a></li>
-            <li><a href="#background" data-label="Parcours"><i class="fa-solid fa-graduation-cap"></i></a></li>
-            <li><a href="#contact" data-label="Contact"><i class="fa-solid fa-envelope"></i></a></li>
-        </ul>
-    </nav>
-
-    <header id="about" class="section hero-section">
-        <div class="hero-content flex-container">
-            <div class="hero-text">
-                <div class="name-container reveal">
-                    <h1 class="glitch solid" data-text="ANTHONY">ANTHONY</h1>
-                    <h1 class="glitch outline" data-text="AFONSO">AFONSO</h1>
-                </div>
-                
-                <h2 class="roles-subtitle reveal">GAME DESIGNER // LEVEL DESIGNER // UX DESIGNER</h2>
-                
-                <div class="tech-terminal reveal">
-                    <div class="terminal-header">
-                        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                        <span class="sys-status">SYS_STATUS: // ONLINE //</span>
-                    </div>
-                    <div class="terminal-body">
-                        <p class="story type-text">
-                            > Profil hybride chargé : De solides bases en développement <span class="highlight">(BTS SIO SLAM)</span> évoluant vers une spécialisation créative en Game Design à <span class="highlight">ISART Digital</span>.<br>
-                            > <span class="highlight">DATA_FEED:</span> Mes créations sont nourries par des œuvres vidéoludiques majeures, le cinéma et une culture musicale très ancrée.<br>
-                            > Ces passions sont le moteur qui alimente mon envie de forger des mécaniques originales et les mondes de demain.<br><br>
-                            > <span class="sys-status blink">CURRENT_OBJECTIVE:</span> Recherche d'opportunité de stage // Juillet 2026.
-                        </p>
-                    </div>
-                </div>
-
-                <a href="#projects" class="btn-cyberpunk reveal" id="btn-init">
-                    <span class="btn-text" data-value="CHARGER LES PROJETS ↓">CHARGER LES PROJETS ↓</span>
-                </a>
-            </div>
-
-            <div class="hero-image-container reveal">
-                <div class="profile-pic-frame">
-                    <div class="tech-deco deco-tl"></div><div class="tech-deco deco-br"></div>
-                    <img src="anthony.jpg" alt="Anthony Afonso" class="profile-pic">
-                </div>
-            </div>
+    <!-- BOOT SCREEN -->
+    <div id="boot-screen">
+        <div class="boot-content">
+            <h1 class="glitch boot-title" data-text="OS.INITIALIZATION">OS.INITIALIZATION</h1>
+            <div class="progress-bar"><div class="progress"></div></div>
+            <p class="boot-logs lang-txt" data-fr="CHARGEMENT DES MODULES SYSTÈME..." data-en="LOADING SYSTEM MODULES...">CHARGEMENT DES MODULES SYSTÈME...</p>
         </div>
-    </header>
+    </div>
 
-    <section id="skills" class="section">
-        <div class="section-header reveal">
-            <span class="number">01</span><h2>COMPÉTENCES / ACQUISITIONS</h2>
-        </div>
-        <div class="skills-inventory">
-            <div class="shelf reveal">
-                <h3 class="shelf-title tech-title">TECH & MOTEURS</h3>
-                <div class="game-box-container">
-                    <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">UNITY</span></div><div class="box-face side"></div></div></div>
-                    <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">VS / VISUAL SCRIPTING</span></div><div class="box-face side"></div></div></div>
-                    <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">GIT / FORK</span></div><div class="box-face side"></div></div></div>
-                </div>
-            </div>
-            <div class="shelf reveal">
-                <h3 class="shelf-title design-title">DESIGN</h3>
-                <div class="game-box-container">
-                    <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">GAME DESIGN</span></div><div class="box-face side"></div></div></div>
-                    <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">LEVEL DESIGN</span></div><div class="box-face side"></div></div></div>
-                    <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">UX / UI</span></div><div class="box-face side"></div></div></div>
-                    <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">QA TEST</span></div><div class="box-face side"></div></div></div>
-                    <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">SYSTEM DESIGN</span></div><div class="box-face side"></div></div></div>
-                </div>
-            </div>
-            <div class="shelf reveal">
-                <h3 class="shelf-title tools-title">OUTILS</h3>
-                <div class="game-box-container">
-                    <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FIGMA</span></div><div class="box-face side"></div></div></div>
-                    <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">EXCEL</span></div><div class="box-face side"></div></div></div>
-                    <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FL STUDIO</span></div><div class="box-face side"></div></div></div>
-                    <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">PHOTOSHOP</span></div><div class="box-face side"></div></div></div>
-                    <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">CAPCUT / MONTAGE VIDÉO</span></div><div class="box-face side"></div></div></div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- TV CRT PHYSIQUE -->
+    <div id="tv-overlay"><div class="crt-line"></div></div>
 
-    <section id="projects" class="section">
-        <div class="section-header reveal">
-            <span class="number">02</span><h2>PROJETS</h2>
-        </div>
+    <!-- L'APPLICATION GLOBALE -->
+    <div id="app-wrapper">
+        <div class="blockout-watermark">DEV_BUILD_V0.1 // GREYBOX_PHASE</div>
+        <div class="crt-overlay"></div>
         
-        <div class="project-card reveal" onclick="openModal('modal-fling')">
-            <div class="project-info">
-                <span class="project-category">PLATEFORME 2.5D</span>
-                <h3>FLING</h3>
-                <ul class="project-tags"><li>10 Étudiants</li><li>3 Mois</li><li>Unity</li></ul>
-                <p>Un jeu de plateforme 2.5D basé sur une mécanique de dash dans les ennemis.</p>
-                <div class="project-roles"><span>LEVEL DESIGN</span><span>GAME DESIGN</span><span>VS</span><span>Fmod</span></div>
-            </div>
-            <div class="project-image-container"><img src="fling1.png" alt="Visuel Fling" class="project-img"></div>
+        <!-- GRILLE 3D RÉACTIVE & FOG OF WAR -->
+        <div class="cyber-grid-container"><div class="cyber-grid"></div><div class="cyber-grid-glow"></div></div>
+        <div class="fog-of-war"></div>
+
+        <div class="static-neon-bg" id="parallax-bg">
+            <div class="tracer cyan t1"></div><div class="tracer magenta t2"></div>
+            <div class="tracer cyan t3"></div><div class="tracer magenta t4"></div>
+            <div class="tracer cyan t5"></div><div class="tracer magenta t6"></div>
+            <div class="floating-poly p1"><div class="poly-face"></div><div class="poly-face"></div><div class="poly-face"></div></div>
+            <div class="floating-poly p2"><div class="poly-face"></div><div class="poly-face"></div><div class="poly-face"></div></div>
+            <div class="floating-poly p3"><div class="poly-face"></div><div class="poly-face"></div><div class="poly-face"></div></div>
         </div>
 
-        <div class="project-card reveal" onclick="openModal('modal-shapeshooter')">
-            <div class="project-info">
-                <span class="project-category">SHOOTER MOBILE</span>
-                <h3>SPEC WAR</h3>
-                <ul class="project-tags"><li>8 Étudiants</li><li>1 Mois</li><li>Unity</li></ul>
-                <p>Un jeu de tir frénétique mobile basé sur les formes géométriques</p>
-                <div class="project-roles"><span>GAME DESIGN</span><span>ÉQUILIBRAGE</span><span>MONÉTISATION</span></div>
-            </div>
-            <div class="project-image-container"><img src="shape1.png" alt="Visuel Spec War" class="project-img"></div>
-        </div>
-        <div class="project-card reveal" onclick="openModal('modal-killer')">
-            <div class="project-info">
-                <span class="project-category">ACTION / BRAWLER</span>
-                <h3>Killer Shark From Outer Space</h3>
-                <ul class="project-tags"><li>5 Étudiants</li><li>2-3 Mois</li><li>Unity</li></ul>
-                <p>Un jeu d'action viscéral centré sur le "game feel" et l'impact des coups.</p>
-                <div class="project-roles"><span>COMBAT DESIGN</span><span>GAME FEEL</span><span>JUICE</span><span>LEVEL DESIGN</span></div>
-            </div>
-            <div class="project-image-container"><img src="killer1.png" alt="Visuel Killer Shark" class="project-img"></div>
-        </div>
+        <nav id="navbar">
+            <ul class="nav-links">
+                <li><a href="#about" class="mag-btn lang-nav" data-fr="Accueil" data-en="Home" data-label="Accueil"><i class="fa-solid fa-house"></i></a></li>
+                <li><a href="#skills" class="mag-btn lang-nav" data-fr="Compétences" data-en="Skills" data-label="Compétences"><i class="fa-solid fa-gamepad"></i></a></li>
+                <li><a href="#projects" class="mag-btn lang-nav" data-fr="Projets" data-en="Projects" data-label="Projets"><i class="fa-solid fa-layer-group"></i></a></li>
+                <li><a href="#background" class="mag-btn lang-nav" data-fr="Parcours" data-en="Journey" data-label="Parcours"><i class="fa-solid fa-graduation-cap"></i></a></li>
+                <li><a href="#contact" class="mag-btn lang-nav" data-fr="Contact" data-en="Contact" data-label="Contact"><i class="fa-solid fa-envelope"></i></a></li>
+                <!-- DIMENSION SHIFT & LANG TOGGLE -->
+                <li><a href="#" id="dimension-shift" class="mag-btn lang-nav" data-fr="Dimension" data-en="Dimension" data-label="Dimension"><i class="fa-solid fa-portal"></i><i class="fa-solid fa-bullseye"></i></a></li>
+                <li><a href="#" id="lang-toggle" class="mag-btn lang-nav" data-fr="Traduire" data-en="Translate" data-label="Traduire"><i class="fa-solid fa-language"></i> <span id="lang-text" style="font-family:var(--font-code); font-size:1rem; font-weight:bold;">EN</span></a></li>
+            </ul>
+        </nav>
 
-        <div class="project-card reveal" onclick="openModal('modal-kenjiro')">
-            <div class="project-info">
-                <span class="project-category">ONE BUTTON GAME</span>
-                <h3>Kenjiro</h3>
-                <ul class="project-tags"><li>Projet Solo</li><li>3 Mois</li><li>Unity</li></ul>
-                <p>Jeu de combats à un seul bouton basé sur le contre, la parade et l'attaque.</p>
-                <div class="project-roles"><span>GAME DESIGN</span><span>LEVEL DESIGN</span><span>VS</span><span>3C</span></div>
-            </div>
-            <div class="project-image-container"><img src="kenjiro.png" alt="Visuel Kenjiro" class="project-img"></div>
-        </div>
+        <header id="about" class="section hero-section">
+            <div class="hero-content flex-container">
+                <div class="hero-text">
+                    <div class="name-container reveal">
+                        <h1 class="glitch" data-text="ANTHONY">ANTHONY</h1>
+                        <h1 class="glitch outline" data-text="AFONSO">AFONSO</h1>
+                    </div>
+                    
+                    <h2 class="roles-subtitle reveal">GAME DESIGNER // LEVEL DESIGNER // UX DESIGNER</h2>
+                    
+                    <div class="tech-terminal reveal" id="interactive-terminal">
+                        <div class="terminal-header">
+                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                            <span class="sys-status">SYS_STATUS: <span class="online-pulse" id="status-indicator">// ONLINE //</span></span>
+                        </div>
+                        <div class="terminal-body">
+                            <p class="story type-text" id="terminal-text">
+                                <span class="auto-type" 
+                                      data-fr="> Profil hybride chargé : De solides bases en développement (BTS SIO SLAM) évoluant vers une spécialisation créative en Game Design à ISART Digital.^1000<br>> DATA_FEED: Mes créations sont nourries par des œuvres vidéoludiques majeures, le cinéma et une culture musicale très ancrée.^1000<br>> Ces passions sont le moteur qui alimente mon envie de forger des mécaniques originales et les mondes de demain.^1000<br><br>> CURRENT_OBJECTIVE: Recherche d'opportunité de stage // Juillet 2026." 
+                                      data-en="> Hybrid profile loaded: Strong development background (BTS SIO SLAM) evolving into a creative specialization in Game Design at ISART Digital.^1000<br>> DATA_FEED: My creations are fueled by major video games, cinema, and deeply rooted musical culture.^1000<br>> These passions drive my desire to forge original mechanics and the worlds of tomorrow.^1000<br><br>> CURRENT_OBJECTIVE: Seeking internship opportunities // July 2026."
+                                      data-string="> Profil hybride chargé : De solides bases en développement (BTS SIO SLAM) évoluant vers une spécialisation créative en Game Design à ISART Digital.^1000<br>> DATA_FEED: Mes créations sont nourries par des œuvres vidéoludiques majeures, le cinéma et une culture musicale très ancrée.^1000<br>> Ces passions sont le moteur qui alimente mon envie de forger des mécaniques originales et les mondes de demain.^1000<br><br>> CURRENT_OBJECTIVE: Recherche d'opportunité de stage // Juillet 2026.">
+                                </span>
+                                <span id="user-typing-area" style="color:var(--magenta)"></span><span class="typing-cursor">_</span>
+                            </p>
+                            <div class="terminal-hint lang-txt" data-fr="[ CLAVIER ACTIF ]" data-en="[ KEYBOARD ACTIVE ]">[ CLAVIER ACTIF ]</div>
+                        </div>
+                    </div>
 
-        <div class="project-card reveal" onclick="openModal('modal-moonpact')">
-            <div class="project-info">
-                <span class="project-category">BOARD GAME</span>
-                <h3>Moon Pact</h3>
-                <ul class="project-tags"><li>7 Étudiants</li><li>3 Mois</li><li>Création manuelle</li></ul>
-                <p>Jeu de plateau stratégique en miroir sous l'influence de la lune.</p>
-                <div class="project-roles"><span>GAME DESIGN</span><span>EQUILIBRAGE</span><span>NARRATION</span></div>
-            </div>
-            <div class="project-image-container"><img src="moonpact1.png" alt="Visuel Moon Pact" class="project-img"></div>
-        </div>
-    </section>
+                    <a href="#projects" class="btn-cyberpunk mag-btn reveal" id="btn-init">
+                        <span class="btn-text lang-txt" data-fr="CHARGER LES PROJETS ↓" data-en="LOAD PROJECTS ↓" data-value="CHARGER LES PROJETS ↓">CHARGER LES PROJETS ↓</span>
+                    </a>
+                </div>
 
-    <section id="background" class="section">
-        <div class="section-header reveal"><span class="number">03</span><h2>MON PARCOURS</h2></div>
-        <div class="timeline reveal">
-            <div class="timeline-item" style="margin-bottom: 2rem; padding-left: 1rem; border-left: 2px solid #00fff9;">
-                <span class="date" style="color: var(--gray-color); font-size: 0.9rem;">2024 - PRÉSENT</span>
-                <h3 style="margin: 0.5rem 0; color: var(--accent-color);">Master en Game Design</h3>
-                <p style="color: var(--gray-color);"><strong>ISART Digital Paris</strong></p>
-                <p>Expérience de production complète de jeux vidéo et de jeux de plateau</p>
+                <div class="hero-image-container reveal">
+                    <div class="hologram-core mag-btn" onclick="triggerBlockoutMode()">
+                        <div class="holo-ring r1"></div><div class="holo-ring r2"></div><div class="holo-ring r3"></div>
+                        <div class="holo-cube"><div class="face front"></div><div class="face back"></div><div class="face right"></div><div class="face left"></div><div class="face top"></div><div class="face bottom"></div></div>
+                        <div class="overdrive-hint">[ TOGGLE GREYBOX ]</div>
+                    </div>
+                </div>
             </div>
-            <div class="timeline-item" style="margin-bottom: 2rem; padding-left: 1rem; border-left: 2px solid #ff00c1;">
-                <span class="date" style="color: var(--gray-color); font-size: 0.9rem;">2022 - 2024</span>
-                <h3 style="margin: 0.5rem 0; color: var(--accent-color);">BTS SIO (SLAM)</h3>
-                <p style="color: var(--gray-color);"><strong>Ensemble Sainte Marie</strong></p>
-                <p>Développement informatique et web.</p>
+        </header>
+
+        <section id="skills" class="section">
+            <div class="section-header reveal"><span class="number">01</span><h2 class="scramble-title lang-txt" data-fr="COMPÉTENCES / ACQUISITIONS" data-en="SKILLS / ACQUISITIONS">COMPÉTENCES / ACQUISITIONS</h2></div>
+            <div class="skills-inventory">
+                <div class="shelf reveal">
+                    <h3 class="shelf-title tech-title scramble-title lang-txt" data-fr="TECH & MOTEURS" data-en="TECH & ENGINES">TECH & MOTEURS</h3>
+                    <div class="game-box-container">
+                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">UNITY</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">VS / SCRIPTING</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">GIT / FORK</span></div><div class="box-face side"></div></div></div>
+                    </div>
+                </div>
+                <div class="shelf reveal">
+                    <h3 class="shelf-title design-title scramble-title">DESIGN</h3>
+                    <div class="game-box-container">
+                        <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">GAME DESIGN</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">LEVEL DESIGN</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">UX / UI</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">QA TEST</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">SYSTEM DESIGN</span></div><div class="box-face side"></div></div></div>
+                    </div>
+                </div>
+                <div class="shelf reveal">
+                    <h3 class="shelf-title tools-title scramble-title lang-txt" data-fr="OUTILS" data-en="TOOLS">OUTILS</h3>
+                    <div class="game-box-container">
+                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FIGMA</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">EXCEL</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FL STUDIO</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">PHOTOSHOP</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">CAPCUT</span></div><div class="box-face side"></div></div></div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="contact" class="section">
-        <div class="section-header reveal"><span class="number">04</span><h2>PRÊT À COMMENCER ?</h2></div>
-        <div class="contact-content reveal">
-            <p>Actuellement à la recherche d'opportunités en <strong>Game Design, QA, Level Design</strong> & <strong>UX</strong>.</p>
-            <p style="color: var(--gray-color); margin-bottom: 2rem;">Disponible à partir de Juiller 2026.</p>
-            <a href="mailto:a.afonso@student.isartdigital.com" class="email-link">a.afonso@student.isartdigital.com</a>
-            <div class="social-links" style="margin-top: 3rem;">
-                <a href="https://www.linkedin.com/in/anthony-afonso-a9272225b/">LinkedIn</a>
-                <a href="STAGECV.pdf" target="_blank">Télécharger mon CV (PDF)</a>
+        <section id="projects" class="section">
+            <div class="section-header reveal"><span class="number">02</span><h2 class="scramble-title lang-txt" data-fr="PROJETS" data-en="PROJECTS">PROJETS</h2></div>
+            
+            <div class="project-card tilt-card reveal" onclick="openModal('modal-synergy')">
+                <div class="project-badge badge-solo lang-txt" data-fr='<i class="fa-solid fa-user"></i> PROJET SOLO' data-en='<i class="fa-solid fa-user"></i> SOLO PROJECT'><i class="fa-solid fa-user"></i> PROJET SOLO</div>
+                <div class="project-info float-3d">
+                    <span class="project-category lang-txt" data-fr="PUZZLE / OS SIMULATOR" data-en="PUZZLE / OS SIMULATOR">PUZZLE / OS SIMULATOR</span>
+                    <h3 class="no-scramble">SYNERGY OS v95.0</h3>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="Projet Solo" data-en="Solo Project">Projet Solo</li><li>Unity</li></ul>
+                    <p class="lang-txt" data-fr="Plongez dans les entrailles d'un système d'exploitation obsolète et piratez ses fonctionnalités pour en percer les mystères." data-en="Dive into the bowels of an obsolete operating system and hack its features to uncover its mysteries.">Plongez dans les entrailles d'un système d'exploitation obsolète et piratez ses fonctionnalités pour en percer les mystères.</p>
+                    <div class="project-roles"><span>GAME DESIGN</span><span>UX/UI</span><span>VS</span></div>
+                </div>
+                <div class="project-image-container float-3d"><img src="synergy.png" alt="Visuel Synergy OS" class="project-img"></div>
             </div>
-        </div>
-    </section>
 
-    <center><footer><p>© 2026 Anthony Afonso</p></footer></center>
+            <div class="project-card tilt-card reveal" onclick="openModal('modal-dusked')">
+                <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
+                <div class="project-info float-3d">
+                    <span class="project-category lang-txt" data-fr="ACTION / SURVIE" data-en="ACTION / SURVIVAL">ACTION / SURVIE</span>
+                    <h3 class="no-scramble">DUSKED</h3>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="Projet de Groupe" data-en="Group Project">Projet de Groupe</li><li>Unity</li></ul>
+                    <p class="lang-txt" data-fr="Survivez jusqu'à l'aube dans une atmosphère oppressante où chaque ombre peut dissimuler une menace fatale." data-en="Survive until dawn in an oppressive atmosphere where every shadow hides a deadly threat.">Survivez jusqu'à l'aube dans une atmosphère oppressante où chaque ombre peut dissimuler une menace fatale.</p>
+                    <div class="project-roles"><span>LEVEL DESIGN</span><span>GAME DESIGN</span></div>
+                </div>
+                <div class="project-image-container float-3d"><img src="dusked.png" alt="Visuel Dusked" class="project-img"></div>
+            </div>
 
+            <div class="project-card tilt-card reveal" onclick="openModal('modal-kenjiro')">
+                <div class="project-badge badge-solo lang-txt" data-fr='<i class="fa-solid fa-user"></i> PROJET SOLO' data-en='<i class="fa-solid fa-user"></i> SOLO PROJECT'><i class="fa-solid fa-user"></i> PROJET SOLO</div>
+                <div class="project-info float-3d">
+                    <span class="project-category">ONE BUTTON GAME</span>
+                    <h3 class="no-scramble">Kenjiro</h3>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="Projet Solo" data-en="Solo Project">Projet Solo</li><li class="lang-txt" data-fr="3 Mois" data-en="3 Months">3 Mois</li><li>Unity</li></ul>
+                    <p class="lang-txt" data-fr="Jeu de combats à un seul bouton basé sur le contre, la parade et l'attaque." data-en="One-button fighting game based on counter, parry, and attack.">Jeu de combats à un seul bouton basé sur le contre, la parade et l'attaque.</p>
+                    <div class="project-roles"><span>GAME DESIGN</span><span>LEVEL DESIGN</span><span>VS</span><span>3C</span></div>
+                </div>
+                <div class="project-image-container float-3d"><img src="kenjiro.png" alt="Visuel Kenjiro" class="project-img"></div>
+            </div>
+
+            <div class="project-card tilt-card reveal" onclick="openModal('modal-fling')">
+                <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
+                <div class="project-info float-3d">
+                    <span class="project-category lang-txt" data-fr="PLATEFORME 2.5D" data-en="2.5D PLATFORMER">PLATEFORME 2.5D</span>
+                    <h3 class="no-scramble">FLING</h3>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="10 Étudiants" data-en="10 Students">10 Étudiants</li><li class="lang-txt" data-fr="3 Mois" data-en="3 Months">3 Mois</li><li>Unity</li></ul>
+                    <p class="lang-txt" data-fr="Un jeu de plateforme 2.5D basé sur une mécanique de dash dans les ennemis." data-en="A 2.5D platformer based on a dash-into-enemies mechanic.">Un jeu de plateforme 2.5D basé sur une mécanique de dash dans les ennemis.</p>
+                    <div class="project-roles"><span>LEVEL DESIGN</span><span>GAME DESIGN</span><span>VS</span><span>FMOD</span></div>
+                </div>
+                <div class="project-image-container float-3d"><img src="fling1.png" alt="Visuel Fling" class="project-img"></div>
+            </div>
+
+            <div class="project-card tilt-card reveal" onclick="openModal('modal-shapeshooter')">
+                <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
+                <div class="project-info float-3d">
+                    <span class="project-category">SHOOTER MOBILE</span>
+                    <h3 class="no-scramble">SPEC WAR</h3>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="8 Étudiants" data-en="8 Students">8 Étudiants</li><li class="lang-txt" data-fr="1 Mois" data-en="1 Month">1 Mois</li><li>Unity</li></ul>
+                    <p class="lang-txt" data-fr="Un jeu de tir frénétique mobile basé sur les formes géométriques." data-en="A frenetic mobile shooter based on geometric shapes.">Un jeu de tir frénétique mobile basé sur les formes géométriques.</p>
+                    <div class="project-roles"><span>GAME DESIGN</span><span class="lang-txt" data-fr="ÉQUILIBRAGE" data-en="BALANCING">ÉQUILIBRAGE</span><span class="lang-txt" data-fr="MONÉTISATION" data-en="MONETIZATION">MONÉTISATION</span></div>
+                </div>
+                <div class="project-image-container float-3d"><img src="shape1.png" alt="Visuel Spec War" class="project-img"></div>
+            </div>
+
+            <div class="project-card tilt-card reveal" onclick="openModal('modal-killer')">
+                <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
+                <div class="project-info float-3d">
+                    <span class="project-category">ACTION / BRAWLER</span>
+                    <h3 class="no-scramble">Killer Shark From Outer Space</h3>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="5 Étudiants" data-en="5 Students">5 Étudiants</li><li class="lang-txt" data-fr="2-3 Mois" data-en="2-3 Months">2-3 Mois</li><li>Unity</li></ul>
+                    <p class="lang-txt" data-fr="Un jeu d'action viscéral centré sur le 'game feel' et l'impact des coups." data-en="A visceral action game focused on game feel and hit impact.">Un jeu d'action viscéral centré sur le "game feel" et l'impact des coups.</p>
+                    <div class="project-roles"><span>COMBAT DESIGN</span><span>GAME FEEL</span><span>JUICE</span><span>LEVEL DESIGN</span></div>
+                </div>
+                <div class="project-image-container float-3d"><img src="killer1.png" alt="Visuel Killer Shark" class="project-img"></div>
+            </div>
+
+            <div class="project-card tilt-card reveal" onclick="openModal('modal-moonpact')">
+                <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
+                <div class="project-info float-3d">
+                    <span class="project-category">BOARD GAME</span>
+                    <h3 class="no-scramble">Moon Pact</h3>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="7 Étudiants" data-en="7 Students">7 Étudiants</li><li class="lang-txt" data-fr="3 Mois" data-en="3 Months">3 Mois</li><li class="lang-txt" data-fr="Création manuelle" data-en="Manual Creation">Création manuelle</li></ul>
+                    <p class="lang-txt" data-fr="Jeu de plateau stratégique en miroir sous l'influence de la lune." data-en="Strategic mirror board game under the influence of the moon.">Jeu de plateau stratégique en miroir sous l'influence de la lune.</p>
+                    <div class="project-roles"><span>GAME DESIGN</span><span class="lang-txt" data-fr="ÉQUILIBRAGE" data-en="BALANCING">ÉQUILIBRAGE</span><span class="lang-txt" data-fr="NARRATION" data-en="NARRATIVE">NARRATION</span></div>
+                </div>
+                <div class="project-image-container float-3d"><img src="moonpact1.png" alt="Visuel Moon Pact" class="project-img"></div>
+            </div>
+        </section>
+
+        <section id="background" class="section">
+            <div class="section-header reveal"><span class="number">03</span><h2 class="scramble-title lang-txt" data-fr="MON PARCOURS" data-en="MY JOURNEY">MON PARCOURS</h2></div>
+            <div class="timeline reveal">
+                <div class="timeline-item cyan-timeline">
+                    <span class="date lang-txt" data-fr="2024 - PRÉSENT" data-en="2024 - PRESENT">2024 - PRÉSENT</span>
+                    <h3 class="lang-txt" data-fr="Master en Game Design" data-en="Master's in Game Design">Master en Game Design</h3>
+                    <p class="school"><strong>ISART Digital Paris</strong></p>
+                    <p class="lang-txt" data-fr="Expérience de production complète de jeux vidéo et de jeux de plateau." data-en="Complete production experience in video games and board games.">Expérience de production complète de jeux vidéo et de jeux de plateau.</p>
+                </div>
+                <div class="timeline-item cyan-timeline">
+                    <span class="date">2024</span>
+                    <h3 class="lang-txt" data-fr="Stage Game Design" data-en="Game Design Internship">Stage Game Design</h3>
+                    <p class="school"><strong>Babasport</strong></p>
+                    <p class="lang-txt" data-fr="Découverte du milieu professionnel, travail en équipe et gestion de projets ludiques." data-en="Discovery of the professional environment, teamwork, and ludic project management.">Découverte du milieu professionnel, travail en équipe et gestion de projets ludiques.</p>
+                </div>
+                <div class="timeline-item magenta-timeline">
+                    <span class="date">2022 - 2024</span>
+                    <h3>BTS SIO (SLAM)</h3>
+                    <p class="school"><strong>Ensemble Sainte Marie</strong></p>
+                    <p class="lang-txt" data-fr="Développement informatique et web." data-en="IT and web development.">Développement informatique et web.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="section-header reveal"><span class="number">04</span><h2 class="scramble-title lang-txt" data-fr="PRÊT À COMMENCER ?" data-en="READY TO START?">PRÊT À COMMENCER ?</h2></div>
+            <div class="contact-content reveal">
+                <p class="lang-txt" data-fr="Actuellement à la recherche d'opportunités en <strong>Game Design, QA, Level Design</strong> & <strong>UX</strong>." data-en="Currently looking for opportunities in <strong>Game Design, QA, Level Design</strong> & <strong>UX</strong>.">Actuellement à la recherche d'opportunités en <strong>Game Design, QA, Level Design</strong> & <strong>UX</strong>.</p>
+                <p class="subtitle lang-txt" data-fr="Disponible à partir de Juillet 2026." data-en="Available from July 2026.">Disponible à partir de Juillet 2026.</p>
+                <a href="mailto:a.afonso@student.isartdigital.com" class="email-link mag-btn">a.afonso@student.isartdigital.com</a>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/anthony-afonso-a9272225b/" class="btn-cyberpunk small mag-btn">LINKEDIN</a>
+                    <a href="STAGECV.pdf" target="_blank" class="btn-cyberpunk small mag-btn">CV (PDF)</a>
+                </div>
+            </div>
+        </section>
+
+        <footer><p>© 2026 Anthony Afonso | <span class="sys-op">SYS.OP // ONLINE</span></p></footer>
+    </div>
+
+    <!-- MODALES -->
     <div id="project-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             
-            <div id="modal-fling" class="modal-project-content" style="display: none;">
-                <h2 class="modal-title cyan-text">FLING</h2>
+            <div id="modal-synergy" class="modal-project-content" style="display: none;">
+                <h2 class="modal-title cyan-text">SYNERGY OS v95.0</h2>
                 <div class="modal-divider cyan-bg"></div>
-                
-                <div class="video-container cyan-border">
-                    <video controls class="project-video">
-                        <source src="FlingTrailer.mp4" type="video/mp4">
-                        Votre navigateur ne supporte pas la balise vidéo.
-                    </video>
-                </div>
-
-                <p>Fling est un jeu de plateforme 2.5D où vous contrôlez une petite créature gluante capable de prendre possession d'objets ronds ! Récupérez la clé dans chaque niveau pour ouvrir le passage vers le cœur de la planète !</p>
-                
-                <div class="modal-link-container">
-                    <a href="https://loveneedlove.itch.io/fling" target="_blank" class="itch-link cyan-link">
-                        <i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO
-                    </a>
-                </div>
+                <div class="video-container cyan-border"><video controls class="project-video"><source src="SynergyTrailer.mp4" type="video/mp4"></video></div>
+                <p class="lang-txt" data-fr="Plongez dans les entrailles d'un système d'exploitation obsolète. Résolvez des puzzles en détournant les interfaces classiques pour contourner la sécurité." data-en="Dive into an obsolete operating system. Solve puzzles by hijacking classic interfaces to bypass security.">Plongez dans les entrailles d'un système d'exploitation obsolète. Résolvez des puzzles en détournant les interfaces classiques pour contourner la sécurité.</p>
             </div>
-            
-            <div id="modal-shapeshooter" class="modal-project-content" style="display: none;">
-                <h2 class="modal-title cyan-text">SPEC WAR</h2>
-                <div class="modal-divider cyan-bg"></div>
-                
-                <div class="video-container cyan-border">
-                    <video controls class="project-video">
-                        <source src="ShapeTrailer.mp4" type="video/mp4">
-                        Votre navigateur ne supporte pas la balise vidéo.
-                    </video>
-                </div>
 
-                <p>SPEC WAR est un shooter mobile frénétique free to play en vue isométrique</p>
-                
-                <div class="modal-link-container">
-                    <a href="#" target="_blank" class="itch-link cyan-link">
-                        <i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO
-                    </a>
-                </div>
-            </div>
-            <div id="modal-killer" class="modal-project-content" style="display: none;">
-                <h2 class="modal-title magenta-text">KILLER SHARK FROM OUTER SPACE</h2>
+            <div id="modal-dusked" class="modal-project-content" style="display: none;">
+                <h2 class="modal-title magenta-text">DUSKED</h2>
                 <div class="modal-divider magenta-bg"></div>
-                
-                <div class="video-container magenta-border">
-                    <video controls class="project-video">
-                        <source src="KillerTrailer.mp4" type="video/mp4">
-                    </video>
-                </div>
-
-                <p>Dans Killer Shark From Outer Space, vous incarnez un requin transformé en robot par les machines mêmes qui ont massacré sa famille. Animé par un désir de vengeance, vous infiltrez leur vaisseau-mère dans le but de le détruire de l'intérieur.</p>
-                
-                <div class="modal-link-container">
-                    <a href="https://windokk.itch.io/killer-shark" target="_blank" class="itch-link magenta-link">
-                        <i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO
-                    </a>
-                </div>
+                <div class="video-container magenta-border"><video controls class="project-video"><source src="DuskedTrailer.mp4" type="video/mp4"></video></div>
+                <p class="lang-txt" data-fr="Survivre est votre seul objectif. Explorez un monde plongé dans l'obscurité, gérez vos ressources avec parcimonie et évitez les menaces." data-en="Survival is your only goal. Explore a world plunged in darkness, manage resources carefully and avoid threats.">Survivre est votre seul objectif. Explorez un monde plongé dans l'obscurité, gérez vos ressources avec parcimonie et évitez les menaces.</p>
             </div>
 
             <div id="modal-kenjiro" class="modal-project-content" style="display: none;">
                 <h2 class="modal-title cyan-text">KENJIRO</h2>
                 <div class="modal-divider cyan-bg"></div>
-                
-                <div class="video-container cyan-border">
-                    <video controls class="project-video">
-                        <source src="KenjiroTrailer.mp4" type="video/mp4">
-                    </video>
-                </div>
+                <div class="video-container cyan-border"><video controls class="project-video"><source src="KenjiroTrailer.mp4" type="video/mp4"></video></div>
+                <p class="lang-txt" data-fr="Kenjiro est un jeu de combat de samouraïs en 1 contre 1, jouable avec un seul bouton par joueur." data-en="Kenjiro is a 1v1 samurai fighting game playable with a single button per player.">Kenjiro est un jeu de combat de samouraïs en 1 contre 1, jouable avec un seul bouton par joueur.</p>
+                <div class="modal-link-container"><a href="https://rydels5.itch.io/kenjiro" target="_blank" class="itch-link cyan-link lang-txt" data-fr='<i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO' data-en='<i class="fa-brands fa-itch-io"></i> PLAY ON ITCH.IO'><i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO</a></div>
+            </div>
 
-                <p>Kenjiro est un jeu de combat de samouraïs en 1 contre 1, jouable avec un seul bouton par joueur. Attaquez, parez et réalisez des parades parfaites contre votre adversaire dans ce jeu de combat ultra-réactif et exigeant où la moindre erreur peut être fatale.</p>
-                
-                <div class="modal-link-container">
-                    <a href="https://rydels5.itch.io/kenjiro" target="_blank" class="itch-link cyan-link">
-                        <i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO
-                    </a>
-                </div>
+            <div id="modal-fling" class="modal-project-content" style="display: none;">
+                <h2 class="modal-title cyan-text">FLING</h2>
+                <div class="modal-divider cyan-bg"></div>
+                <div class="video-container cyan-border"><video controls class="project-video"><source src="FlingTrailer.mp4" type="video/mp4"></video></div>
+                <p class="lang-txt" data-fr="Fling est un jeu de plateforme 2.5D où vous contrôlez une petite créature gluante capable de prendre possession d'objets ronds !" data-en="Fling is a 2.5D platformer where you control a small gooey creature able to possess round objects!">Fling est un jeu de plateforme 2.5D où vous contrôlez une petite créature gluante capable de prendre possession d'objets ronds !</p>
+                <div class="modal-link-container"><a href="https://loveneedlove.itch.io/fling" target="_blank" class="itch-link cyan-link lang-txt" data-fr='<i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO' data-en='<i class="fa-brands fa-itch-io"></i> PLAY ON ITCH.IO'><i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO</a></div>
+            </div>
+
+            <div id="modal-shapeshooter" class="modal-project-content" style="display: none;">
+                <h2 class="modal-title cyan-text">SPEC WAR</h2>
+                <div class="modal-divider cyan-bg"></div>
+                <div class="video-container cyan-border"><video controls class="project-video"><source src="ShapeTrailer.mp4" type="video/mp4"></video></div>
+                <p class="lang-txt" data-fr="SPEC WAR est un shooter mobile frénétique free to play en vue isométrique." data-en="SPEC WAR is a frenetic free-to-play mobile shooter with an isometric view.">SPEC WAR est un shooter mobile frénétique free to play en vue isométrique.</p>
+                <div class="modal-link-container"><a href="#" target="_blank" class="itch-link cyan-link lang-txt" data-fr='<i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO' data-en='<i class="fa-brands fa-itch-io"></i> PLAY ON ITCH.IO'><i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO</a></div>
+            </div>
+
+            <div id="modal-killer" class="modal-project-content" style="display: none;">
+                <h2 class="modal-title magenta-text">KILLER SHARK FROM OUTER SPACE</h2>
+                <div class="modal-divider magenta-bg"></div>
+                <div class="video-container magenta-border"><video controls class="project-video"><source src="KillerTrailer.mp4" type="video/mp4"></video></div>
+                <p class="lang-txt" data-fr="Dans Killer Shark From Outer Space, vous incarnez un requin transformé en robot animé par un désir de vengeance." data-en="In Killer Shark From Outer Space, you play as a robot-transformed shark driven by a desire for revenge.">Dans Killer Shark From Outer Space, vous incarnez un requin transformé en robot animé par un désir de vengeance.</p>
+                <div class="modal-link-container"><a href="https://windokk.itch.io/killer-shark" target="_blank" class="itch-link magenta-link lang-txt" data-fr='<i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO' data-en='<i class="fa-brands fa-itch-io"></i> PLAY ON ITCH.IO'><i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO</a></div>
             </div>
 
             <div id="modal-moonpact" class="modal-project-content" style="display: none;">
                 <h2 class="modal-title magenta-text">MOON PACT</h2>
                 <div class="modal-divider magenta-bg"></div>
-                
-                <div class="video-container magenta-border">
-                    <video controls class="project-video">
-                        <source src="MoonTrailer.mp4" type="video/mp4">
-                    </video>
-                </div>
-
-                <p>Vous avez été choisi pour défendre votre tribu. Avec votre allié, votre but sera de terminer votre forme avant vos adversaires.<br><br>
-                – Posez vos pions aux bons endroits<br>
-                – Lancez des malédictions<br>
-                – Aidez votre allié<br><br>
-                Le tout sur un plateau où la symétrie est votre seul moyen d’interaction.</p>
+                <div class="video-container magenta-border"><video controls class="project-video"><source src="MoonTrailer.mp4" type="video/mp4"></video></div>
+                <p class="lang-txt" data-fr="Jeu de plateau stratégique en miroir sous l'influence de la lune." data-en="Strategic mirror board game under the influence of the moon.">Jeu de plateau stratégique en miroir sous l'influence de la lune.</p>
             </div>
-
         </div>
     </div>
 
