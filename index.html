@@ -13,9 +13,9 @@
 </head>
 <body class="booting">
 
-    <!-- CURSEURS INFAILLIBLES -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
+    <!-- DOUBLE CURSEUR STABILISÉ -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
 
     <!-- UI GAMIFICATION -->
     <div id="xp-bar-container"><div id="xp-bar"></div></div>
@@ -33,9 +33,25 @@
         <div class="map-dot active" data-target="#about"></div>
         <div class="map-dot" data-target="#skills"></div>
         <div class="map-dot" data-target="#projects"></div>
+        <div class="map-dot" data-target="#experience"></div>
         <div class="map-dot" data-target="#background"></div>
         <div class="map-dot" data-target="#contact"></div>
     </div>
+
+    <!-- BARRE DE NAVIGATION -->
+    <nav id="navbar">
+        <ul class="nav-links">
+            <li><a href="#about" class="mag-btn lang-nav" data-fr="Accueil" data-en="Home" data-label="Accueil"><i class="fa-solid fa-house"></i></a></li>
+            <li><a href="#skills" class="mag-btn lang-nav" data-fr="Compétences" data-en="Skills" data-label="Compétences"><i class="fa-solid fa-gamepad"></i></a></li>
+            <li><a href="#projects" class="mag-btn lang-nav" data-fr="Projets" data-en="Projects" data-label="Projets"><i class="fa-solid fa-layer-group"></i></a></li>
+            <li><a href="#experience" class="mag-btn lang-nav" data-fr="Expérience" data-en="Experience" data-label="Expérience"><i class="fa-solid fa-briefcase"></i></a></li>
+            <li><a href="#background" class="mag-btn lang-nav" data-fr="Parcours" data-en="Journey" data-label="Parcours"><i class="fa-solid fa-graduation-cap"></i></a></li>
+            <li><a href="#contact" class="mag-btn lang-nav" data-fr="Contact" data-en="Contact" data-label="Contact"><i class="fa-solid fa-envelope"></i></a></li>
+            <!-- DIMENSION SHIFT & LANG TOGGLE -->
+            <li><a href="#" id="dimension-shift" class="mag-btn lang-nav" data-fr="Dimension" data-en="Dimension" data-label="Dimension"><i class="fa-solid fa-portal"></i><i class="fa-solid fa-bullseye"></i></a></li>
+            <li><a href="#" id="lang-toggle" class="mag-btn lang-nav" data-fr="Traduire" data-en="Translate" data-label="Traduire"><i class="fa-solid fa-language"></i> <span id="lang-text" style="font-family:var(--font-code); font-size:1rem; font-weight:bold;">EN</span></a></li>
+        </ul>
+    </nav>
 
     <!-- BOOT SCREEN -->
     <div id="boot-screen">
@@ -49,7 +65,7 @@
     <!-- TV CRT PHYSIQUE -->
     <div id="tv-overlay"><div class="crt-line"></div></div>
 
-    <!-- L'APPLICATION GLOBALE -->
+    <!-- L'APPLICATION GLOBALE (Site complet) -->
     <div id="app-wrapper">
         <div class="blockout-watermark">DEV_BUILD_V0.1 // GREYBOX_PHASE</div>
         <div class="crt-overlay"></div>
@@ -58,6 +74,7 @@
         <div class="cyber-grid-container"><div class="cyber-grid"></div><div class="cyber-grid-glow"></div></div>
         <div class="fog-of-war"></div>
 
+        <!-- BACKGROUND NEON -->
         <div class="static-neon-bg" id="parallax-bg">
             <div class="tracer cyan t1"></div><div class="tracer magenta t2"></div>
             <div class="tracer cyan t3"></div><div class="tracer magenta t4"></div>
@@ -67,19 +84,6 @@
             <div class="floating-poly p3"><div class="poly-face"></div><div class="poly-face"></div><div class="poly-face"></div></div>
         </div>
 
-        <nav id="navbar">
-            <ul class="nav-links">
-                <li><a href="#about" class="mag-btn lang-nav" data-fr="Accueil" data-en="Home" data-label="Accueil"><i class="fa-solid fa-house"></i></a></li>
-                <li><a href="#skills" class="mag-btn lang-nav" data-fr="Compétences" data-en="Skills" data-label="Compétences"><i class="fa-solid fa-gamepad"></i></a></li>
-                <li><a href="#projects" class="mag-btn lang-nav" data-fr="Projets" data-en="Projects" data-label="Projets"><i class="fa-solid fa-layer-group"></i></a></li>
-                <li><a href="#background" class="mag-btn lang-nav" data-fr="Parcours" data-en="Journey" data-label="Parcours"><i class="fa-solid fa-graduation-cap"></i></a></li>
-                <li><a href="#contact" class="mag-btn lang-nav" data-fr="Contact" data-en="Contact" data-label="Contact"><i class="fa-solid fa-envelope"></i></a></li>
-                <!-- DIMENSION SHIFT & LANG TOGGLE -->
-                <li><a href="#" id="dimension-shift" class="mag-btn lang-nav" data-fr="Dimension" data-en="Dimension" data-label="Dimension"><i class="fa-solid fa-portal"></i><i class="fa-solid fa-bullseye"></i></a></li>
-                <li><a href="#" id="lang-toggle" class="mag-btn lang-nav" data-fr="Traduire" data-en="Translate" data-label="Traduire"><i class="fa-solid fa-language"></i> <span id="lang-text" style="font-family:var(--font-code); font-size:1rem; font-weight:bold;">EN</span></a></li>
-            </ul>
-        </nav>
-
         <header id="about" class="section hero-section">
             <div class="hero-content flex-container">
                 <div class="hero-text">
@@ -88,7 +92,7 @@
                         <h1 class="glitch outline" data-text="AFONSO">AFONSO</h1>
                     </div>
                     
-                    <h2 class="roles-subtitle reveal">GAME DESIGNER // LEVEL DESIGNER // UX DESIGNER</h2>
+                    <h2 class="roles-subtitle reveal">GAME DESIGNER // QA TESTER // LEVEL DESIGNER // UX DESIGNER</h2>
                     
                     <div class="tech-terminal reveal" id="interactive-terminal">
                         <div class="terminal-header">
@@ -98,13 +102,13 @@
                         <div class="terminal-body">
                             <p class="story type-text" id="terminal-text">
                                 <span class="auto-type" 
-                                      data-fr="> Profil hybride chargé : De solides bases en développement (BTS SIO SLAM) évoluant vers une spécialisation créative en Game Design à ISART Digital.^1000<br>> DATA_FEED: Mes créations sont nourries par des œuvres vidéoludiques majeures, le cinéma et une culture musicale très ancrée.^1000<br>> Ces passions sont le moteur qui alimente mon envie de forger des mécaniques originales et les mondes de demain.^1000<br><br>> CURRENT_OBJECTIVE: Recherche d'opportunité de stage // Juillet 2026." 
-                                      data-en="> Hybrid profile loaded: Strong development background (BTS SIO SLAM) evolving into a creative specialization in Game Design at ISART Digital.^1000<br>> DATA_FEED: My creations are fueled by major video games, cinema, and deeply rooted musical culture.^1000<br>> These passions drive my desire to forge original mechanics and the worlds of tomorrow.^1000<br><br>> CURRENT_OBJECTIVE: Seeking internship opportunities // July 2026."
-                                      data-string="> Profil hybride chargé : De solides bases en développement (BTS SIO SLAM) évoluant vers une spécialisation créative en Game Design à ISART Digital.^1000<br>> DATA_FEED: Mes créations sont nourries par des œuvres vidéoludiques majeures, le cinéma et une culture musicale très ancrée.^1000<br>> Ces passions sont le moteur qui alimente mon envie de forger des mécaniques originales et les mondes de demain.^1000<br><br>> CURRENT_OBJECTIVE: Recherche d'opportunité de stage // Juillet 2026.">
+                                      data-fr="> Profil hybride chargé : De solides bases en développement (BTS SIO SLAM) évoluant vers une spécialisation créative en Game Design à ISART Digital.^1000<br>> DATA_FEED: Mes créations sont nourries par des œuvres vidéoludiques majeures, le cinéma et une culture musicale très ancrée.^1000<br>> Ces passions sont le moteur qui alimente mon envie de forger des mécaniques originales et les mondes de demain.^1000<br><br>> CURRENT_OBJECTIVE: Recherche d'opportunité de stage // Février à Avril 2027." 
+                                      data-en="> Hybrid profile loaded: Strong development background (BTS SIO SLAM) evolving into a creative specialization in Game Design at ISART Digital.^1000<br>> DATA_FEED: My creations are fueled by major video games, cinema, and deeply rooted musical culture.^1000<br>> These passions drive my desire to forge original mechanics and the worlds of tomorrow.^1000<br><br>> CURRENT_OBJECTIVE: Seeking internship opportunities // February to April 2027."
+                                      data-string="> Profil hybride chargé : De solides bases en développement (BTS SIO SLAM) évoluant vers une spécialisation créative en Game Design à ISART Digital.^1000<br>> DATA_FEED: Mes créations sont nourries par des œuvres vidéoludiques majeures, le cinéma et une culture musicale très ancrée.^1000<br>> Ces passions sont le moteur qui alimente mon envie de forger des mécaniques originales et les mondes de demain.^1000<br><br>> CURRENT_OBJECTIVE: Recherche d'opportunité de stage // Février à Avril 2027.">
                                 </span>
                                 <span id="user-typing-area" style="color:var(--magenta)"></span><span class="typing-cursor">_</span>
                             </p>
-                            <div class="terminal-hint lang-txt" data-fr="[ CLAVIER ACTIF ]" data-en="[ KEYBOARD ACTIVE ]">[ CLAVIER ACTIF ]</div>
+                            <div class="terminal-hint lang-txt" data-fr="< CLAVIER ACTIF >" data-en="< KEYBOARD ACTIVE >">< CLAVIER ACTIF ></div>
                         </div>
                     </div>
 
@@ -117,7 +121,7 @@
                     <div class="hologram-core mag-btn" onclick="triggerBlockoutMode()">
                         <div class="holo-ring r1"></div><div class="holo-ring r2"></div><div class="holo-ring r3"></div>
                         <div class="holo-cube"><div class="face front"></div><div class="face back"></div><div class="face right"></div><div class="face left"></div><div class="face top"></div><div class="face bottom"></div></div>
-                        <div class="overdrive-hint">[ TOGGLE GREYBOX ]</div>
+                        <div class="overdrive-hint">< TOGGLE GREYBOX ></div>
                     </div>
                 </div>
             </div>
@@ -129,29 +133,30 @@
                 <div class="shelf reveal">
                     <h3 class="shelf-title tech-title scramble-title lang-txt" data-fr="TECH & MOTEURS" data-en="TECH & ENGINES">TECH & MOTEURS</h3>
                     <div class="game-box-container">
-                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">UNITY</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">VS / SCRIPTING</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">GIT / FORK</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">UNITY</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">UNREAL ENGINE</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">VS / SCRIPTING</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">GIT / FORK</span></div><div class="box-face side"></div></div></div>
                     </div>
                 </div>
                 <div class="shelf reveal">
                     <h3 class="shelf-title design-title scramble-title">DESIGN</h3>
                     <div class="game-box-container">
-                        <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">GAME DESIGN</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">LEVEL DESIGN</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">UX / UI</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">QA TEST</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper"><div class="game-box magenta"><div class="box-face front"><span class="box-title">SYSTEM DESIGN</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">GAME DESIGN</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">LEVEL DESIGN</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">UX / UI</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">QA TEST</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">SYSTEM DESIGN</span></div><div class="box-face side"></div></div></div>
                     </div>
                 </div>
                 <div class="shelf reveal">
                     <h3 class="shelf-title tools-title scramble-title lang-txt" data-fr="OUTILS" data-en="TOOLS">OUTILS</h3>
                     <div class="game-box-container">
-                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FIGMA</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">EXCEL</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FL STUDIO</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">PHOTOSHOP</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper"><div class="game-box cyan"><div class="box-face front"><span class="box-title">CAPCUT</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FIGMA</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">EXCEL</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FL STUDIO</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">PHOTOSHOP</span></div><div class="box-face side"></div></div></div>
+                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">CAPCUT</span></div><div class="box-face side"></div></div></div>
                     </div>
                 </div>
             </div>
@@ -160,31 +165,47 @@
         <section id="projects" class="section">
             <div class="section-header reveal"><span class="number">02</span><h2 class="scramble-title lang-txt" data-fr="PROJETS" data-en="PROJECTS">PROJETS</h2></div>
             
-            <div class="project-card tilt-card reveal" onclick="openModal('modal-synergy')">
+            <!-- 1. DUSKED -->
+            <div class="project-card tilt-card rarity-epic reveal" onclick="openModal('modal-dusked')">
+                <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
+                <div class="project-info float-3d">
+                    <span class="project-category lang-txt" data-fr="JEU DE RYTHME" data-en="RHYTHM GAME">JEU DE RYTHME</span>
+                    <h3 class="no-scramble">DUSKED</h3>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="10 Étudiants" data-en="10 Students">10 Étudiants</li><li class="lang-txt" data-fr="1 Semaine" data-en="1 Week">1 Semaine</li><li>Unity</li></ul>
+                    <p class="lang-txt" data-fr="Un jeu de rythme où vous incarnez l'ami imaginaire de Luna pour la protéger de ses traumatismes en attaquant en rythme avec la musique." data-en="A rhythm game where you play as Luna's imaginary friend to protect her from her past traumas by attacking to the beat of the music.">Un jeu de rythme où vous incarnez l'ami imaginaire de Luna pour la protéger de ses traumatismes en attaquant en rythme avec la musique.</p>
+                    <div class="project-roles"><span>GAME DESIGN</span><span>LEVEL DESIGN</span><span>INTÉGRATION</span></div>
+                </div>
+                <div class="project-image-container float-3d"><img src="dusked1.png" alt="Visuel Dusked" class="project-img"></div>
+            </div>
+
+            <!-- 2. FLING -->
+            <div class="project-card tilt-card rarity-epic reveal" onclick="openModal('modal-fling')">
+                <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
+                <div class="project-info float-3d">
+                    <span class="project-category lang-txt" data-fr="PLATEFORME 2.5D" data-en="2.5D PLATFORMER">PLATEFORME 2.5D</span>
+                    <h3 class="no-scramble">FLING</h3>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="10 Étudiants" data-en="10 Students">10 Étudiants</li><li class="lang-txt" data-fr="3 Mois" data-en="3 Months">3 Mois</li><li>Unity</li></ul>
+                    <p class="lang-txt" data-fr="Un jeu de plateforme 2.5D basé sur une mécanique de dash dans les ennemis." data-en="A 2.5D platformer based on a dash-into-enemies mechanic.">Un jeu de plateforme 2.5D basé sur une mécanique de dash dans les ennemis.</p>
+                    <div class="project-roles"><span>LEVEL DESIGN</span><span>GAME DESIGN</span><span>INTÉGRATION</span></div>
+                </div>
+                <div class="project-image-container float-3d"><img src="fling1.png" alt="Visuel Fling" class="project-img"></div>
+            </div>
+
+            <!-- 3. SYNERGY OS -->
+            <div class="project-card tilt-card rarity-legendary reveal" onclick="openModal('modal-synergy')">
                 <div class="project-badge badge-solo lang-txt" data-fr='<i class="fa-solid fa-user"></i> PROJET SOLO' data-en='<i class="fa-solid fa-user"></i> SOLO PROJECT'><i class="fa-solid fa-user"></i> PROJET SOLO</div>
                 <div class="project-info float-3d">
                     <span class="project-category lang-txt" data-fr="PUZZLE / OS SIMULATOR" data-en="PUZZLE / OS SIMULATOR">PUZZLE / OS SIMULATOR</span>
                     <h3 class="no-scramble">SYNERGY OS v95.0</h3>
-                    <ul class="project-tags"><li class="lang-txt" data-fr="Projet Solo" data-en="Solo Project">Projet Solo</li><li>Unity</li></ul>
-                    <p class="lang-txt" data-fr="Plongez dans les entrailles d'un système d'exploitation obsolète et piratez ses fonctionnalités pour en percer les mystères." data-en="Dive into the bowels of an obsolete operating system and hack its features to uncover its mysteries.">Plongez dans les entrailles d'un système d'exploitation obsolète et piratez ses fonctionnalités pour en percer les mystères.</p>
-                    <div class="project-roles"><span>GAME DESIGN</span><span>UX/UI</span><span>VS</span></div>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="Projet Solo" data-en="Solo Project">Projet Solo</li><li class="lang-txt" data-fr="5 Mois" data-en="5 Months">5 Mois</li><li>Unity / JS</li></ul>
+                    <p class="lang-txt" data-fr="Un jeu d'exploration dystopique où votre conscience est piégée dans le système informatique d'une multinationale. Survivez à cinq jours de stage infernal et fuyez le burn-out." data-en="A dystopian exploration game where your consciousness is trapped in a multinational's computer system. Survive five days of an infernal internship and escape burnout.">Un jeu d'exploration dystopique où votre conscience est piégée dans le système informatique d'une multinationale. Survivez à cinq jours de stage infernal et fuyez le burn-out pour espérer conserver vos organes vitaux.</p>
+                    <div class="project-roles"><span>GAME DESIGN</span><span>LEVEL DESIGN</span><span>UX</span><span>INTÉGRATION</span><span>3C</span></div>
                 </div>
-                <div class="project-image-container float-3d"><img src="synergy.png" alt="Visuel Synergy OS" class="project-img"></div>
+                <div class="project-image-container float-3d"><img src="synergy1.png" alt="Visuel Synergy OS" class="project-img"></div>
             </div>
 
-            <div class="project-card tilt-card reveal" onclick="openModal('modal-dusked')">
-                <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
-                <div class="project-info float-3d">
-                    <span class="project-category lang-txt" data-fr="ACTION / SURVIE" data-en="ACTION / SURVIVAL">ACTION / SURVIE</span>
-                    <h3 class="no-scramble">DUSKED</h3>
-                    <ul class="project-tags"><li class="lang-txt" data-fr="Projet de Groupe" data-en="Group Project">Projet de Groupe</li><li>Unity</li></ul>
-                    <p class="lang-txt" data-fr="Survivez jusqu'à l'aube dans une atmosphère oppressante où chaque ombre peut dissimuler une menace fatale." data-en="Survive until dawn in an oppressive atmosphere where every shadow hides a deadly threat.">Survivez jusqu'à l'aube dans une atmosphère oppressante où chaque ombre peut dissimuler une menace fatale.</p>
-                    <div class="project-roles"><span>LEVEL DESIGN</span><span>GAME DESIGN</span></div>
-                </div>
-                <div class="project-image-container float-3d"><img src="dusked.png" alt="Visuel Dusked" class="project-img"></div>
-            </div>
-
-            <div class="project-card tilt-card reveal" onclick="openModal('modal-kenjiro')">
+            <!-- 4. KENJIRO -->
+            <div class="project-card tilt-card rarity-legendary reveal" onclick="openModal('modal-kenjiro')">
                 <div class="project-badge badge-solo lang-txt" data-fr='<i class="fa-solid fa-user"></i> PROJET SOLO' data-en='<i class="fa-solid fa-user"></i> SOLO PROJECT'><i class="fa-solid fa-user"></i> PROJET SOLO</div>
                 <div class="project-info float-3d">
                     <span class="project-category">ONE BUTTON GAME</span>
@@ -196,19 +217,34 @@
                 <div class="project-image-container float-3d"><img src="kenjiro.png" alt="Visuel Kenjiro" class="project-img"></div>
             </div>
 
-            <div class="project-card tilt-card reveal" onclick="openModal('modal-fling')">
+            <!-- 5. KILLER SHARK -->
+            <div class="project-card tilt-card rarity-epic reveal" onclick="openModal('modal-killer')">
                 <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
                 <div class="project-info float-3d">
-                    <span class="project-category lang-txt" data-fr="PLATEFORME 2.5D" data-en="2.5D PLATFORMER">PLATEFORME 2.5D</span>
-                    <h3 class="no-scramble">FLING</h3>
-                    <ul class="project-tags"><li class="lang-txt" data-fr="10 Étudiants" data-en="10 Students">10 Étudiants</li><li class="lang-txt" data-fr="3 Mois" data-en="3 Months">3 Mois</li><li>Unity</li></ul>
-                    <p class="lang-txt" data-fr="Un jeu de plateforme 2.5D basé sur une mécanique de dash dans les ennemis." data-en="A 2.5D platformer based on a dash-into-enemies mechanic.">Un jeu de plateforme 2.5D basé sur une mécanique de dash dans les ennemis.</p>
-                    <div class="project-roles"><span>LEVEL DESIGN</span><span>GAME DESIGN</span><span>VS</span><span>FMOD</span></div>
+                    <span class="project-category">ACTION / BRAWLER</span>
+                    <h3 class="no-scramble">Killer Shark From Outer Space</h3>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="5 Étudiants" data-en="5 Students">5 Étudiants</li><li class="lang-txt" data-fr="2-3 Mois" data-en="2-3 Months">2-3 Mois</li><li>Unity</li></ul>
+                    <p class="lang-txt" data-fr="Un jeu d'action viscéral centré sur le 'game feel' et l'impact des coups." data-en="A visceral action game focused on game feel and hit impact.">Un jeu d'action viscéral centré sur le 'game feel' et l'impact des coups.</p>
+                    <div class="project-roles"><span>COMBAT DESIGN</span><span>GAME FEEL</span><span>JUICE</span><span>LEVEL DESIGN</span></div>
                 </div>
-                <div class="project-image-container float-3d"><img src="fling1.png" alt="Visuel Fling" class="project-img"></div>
+                <div class="project-image-container float-3d"><img src="killer1.png" alt="Visuel Killer Shark" class="project-img"></div>
             </div>
 
-            <div class="project-card tilt-card reveal" onclick="openModal('modal-shapeshooter')">
+            <!-- 6. MOON PACT -->
+            <div class="project-card tilt-card rarity-epic reveal" onclick="openModal('modal-moonpact')">
+                <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
+                <div class="project-info float-3d">
+                    <span class="project-category">BOARD GAME</span>
+                    <h3 class="no-scramble">Moon Pact</h3>
+                    <ul class="project-tags"><li class="lang-txt" data-fr="7 Étudiants" data-en="7 Students">7 Étudiants</li><li class="lang-txt" data-fr="3 Mois" data-en="3 Months">3 Mois</li><li class="lang-txt" data-fr="Création manuelle" data-en="Manual Creation">Création manuelle</li></ul>
+                    <p class="lang-txt" data-fr="Jeu de plateau stratégique en miroir sous l'influence de la lune." data-en="Strategic mirror board game under the influence of the moon.">Jeu de plateau stratégique en miroir sous l'influence de la lune.</p>
+                    <div class="project-roles"><span>GAME DESIGN</span><span class="lang-txt" data-fr="ÉQUILIBRAGE" data-en="BALANCING">ÉQUILIBRAGE</span><span class="lang-txt" data-fr="NARRATION" data-en="NARRATIVE">NARRATION</span></div>
+                </div>
+                <div class="project-image-container float-3d"><img src="moonpact1.png" alt="Visuel Moon Pact" class="project-img"></div>
+            </div>
+
+            <!-- 7. SPEC WAR -->
+            <div class="project-card tilt-card rarity-epic reveal" onclick="openModal('modal-shapeshooter')">
                 <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
                 <div class="project-info float-3d">
                     <span class="project-category">SHOOTER MOBILE</span>
@@ -220,45 +256,30 @@
                 <div class="project-image-container float-3d"><img src="shape1.png" alt="Visuel Spec War" class="project-img"></div>
             </div>
 
-            <div class="project-card tilt-card reveal" onclick="openModal('modal-killer')">
-                <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
-                <div class="project-info float-3d">
-                    <span class="project-category">ACTION / BRAWLER</span>
-                    <h3 class="no-scramble">Killer Shark From Outer Space</h3>
-                    <ul class="project-tags"><li class="lang-txt" data-fr="5 Étudiants" data-en="5 Students">5 Étudiants</li><li class="lang-txt" data-fr="2-3 Mois" data-en="2-3 Months">2-3 Mois</li><li>Unity</li></ul>
-                    <p class="lang-txt" data-fr="Un jeu d'action viscéral centré sur le 'game feel' et l'impact des coups." data-en="A visceral action game focused on game feel and hit impact.">Un jeu d'action viscéral centré sur le "game feel" et l'impact des coups.</p>
-                    <div class="project-roles"><span>COMBAT DESIGN</span><span>GAME FEEL</span><span>JUICE</span><span>LEVEL DESIGN</span></div>
-                </div>
-                <div class="project-image-container float-3d"><img src="killer1.png" alt="Visuel Killer Shark" class="project-img"></div>
-            </div>
+        </section>
 
-            <div class="project-card tilt-card reveal" onclick="openModal('modal-moonpact')">
-                <div class="project-badge badge-group lang-txt" data-fr='<i class="fa-solid fa-users"></i> PROJET DE GROUPE' data-en='<i class="fa-solid fa-users"></i> GROUP PROJECT'><i class="fa-solid fa-users"></i> PROJET DE GROUPE</div>
-                <div class="project-info float-3d">
-                    <span class="project-category">BOARD GAME</span>
-                    <h3 class="no-scramble">Moon Pact</h3>
-                    <ul class="project-tags"><li class="lang-txt" data-fr="7 Étudiants" data-en="7 Students">7 Étudiants</li><li class="lang-txt" data-fr="3 Mois" data-en="3 Months">3 Mois</li><li class="lang-txt" data-fr="Création manuelle" data-en="Manual Creation">Création manuelle</li></ul>
-                    <p class="lang-txt" data-fr="Jeu de plateau stratégique en miroir sous l'influence de la lune." data-en="Strategic mirror board game under the influence of the moon.">Jeu de plateau stratégique en miroir sous l'influence de la lune.</p>
-                    <div class="project-roles"><span>GAME DESIGN</span><span class="lang-txt" data-fr="ÉQUILIBRAGE" data-en="BALANCING">ÉQUILIBRAGE</span><span class="lang-txt" data-fr="NARRATION" data-en="NARRATIVE">NARRATION</span></div>
+        <!-- SECTION EXPERIENCES PRO -->
+        <section id="experience" class="section">
+            <div class="section-header reveal"><span class="number">03</span><h2 class="scramble-title lang-txt" data-fr="EXPÉRIENCE PRO" data-en="WORK EXPERIENCE">EXPÉRIENCE PRO</h2></div>
+            <div class="timeline reveal">
+                <div class="timeline-item cyan-timeline">
+                    <span class="date">2024</span>
+                    <h3 class="lang-txt" data-fr="Stage Game Design" data-en="Game Design Internship">Stage Game Design</h3>
+                    <p class="school"><strong>Babasport</strong></p>
+                    <p class="lang-txt" data-fr="Découverte du milieu professionnel, travail en équipe et gestion de projets ludiques." data-en="Discovery of the professional environment, teamwork, and ludic project management.">Découverte du milieu professionnel, travail en équipe et gestion de projets ludiques.</p>
                 </div>
-                <div class="project-image-container float-3d"><img src="moonpact1.png" alt="Visuel Moon Pact" class="project-img"></div>
             </div>
         </section>
 
+        <!-- PARCOURS -->
         <section id="background" class="section">
-            <div class="section-header reveal"><span class="number">03</span><h2 class="scramble-title lang-txt" data-fr="MON PARCOURS" data-en="MY JOURNEY">MON PARCOURS</h2></div>
+            <div class="section-header reveal"><span class="number">04</span><h2 class="scramble-title lang-txt" data-fr="MON PARCOURS" data-en="MY JOURNEY">MON PARCOURS</h2></div>
             <div class="timeline reveal">
                 <div class="timeline-item cyan-timeline">
                     <span class="date lang-txt" data-fr="2024 - PRÉSENT" data-en="2024 - PRESENT">2024 - PRÉSENT</span>
                     <h3 class="lang-txt" data-fr="Master en Game Design" data-en="Master's in Game Design">Master en Game Design</h3>
                     <p class="school"><strong>ISART Digital Paris</strong></p>
                     <p class="lang-txt" data-fr="Expérience de production complète de jeux vidéo et de jeux de plateau." data-en="Complete production experience in video games and board games.">Expérience de production complète de jeux vidéo et de jeux de plateau.</p>
-                </div>
-                <div class="timeline-item cyan-timeline">
-                    <span class="date">2024</span>
-                    <h3 class="lang-txt" data-fr="Stage Game Design" data-en="Game Design Internship">Stage Game Design</h3>
-                    <p class="school"><strong>Babasport</strong></p>
-                    <p class="lang-txt" data-fr="Découverte du milieu professionnel, travail en équipe et gestion de projets ludiques." data-en="Discovery of the professional environment, teamwork, and ludic project management.">Découverte du milieu professionnel, travail en équipe et gestion de projets ludiques.</p>
                 </div>
                 <div class="timeline-item magenta-timeline">
                     <span class="date">2022 - 2024</span>
@@ -269,11 +290,12 @@
             </div>
         </section>
 
+        <!-- CONTACT -->
         <section id="contact" class="section">
-            <div class="section-header reveal"><span class="number">04</span><h2 class="scramble-title lang-txt" data-fr="PRÊT À COMMENCER ?" data-en="READY TO START?">PRÊT À COMMENCER ?</h2></div>
+            <div class="section-header reveal"><span class="number">05</span><h2 class="scramble-title lang-txt" data-fr="PRÊT À COMMENCER ?" data-en="READY TO START?">PRÊT À COMMENCER ?</h2></div>
             <div class="contact-content reveal">
                 <p class="lang-txt" data-fr="Actuellement à la recherche d'opportunités en <strong>Game Design, QA, Level Design</strong> & <strong>UX</strong>." data-en="Currently looking for opportunities in <strong>Game Design, QA, Level Design</strong> & <strong>UX</strong>.">Actuellement à la recherche d'opportunités en <strong>Game Design, QA, Level Design</strong> & <strong>UX</strong>.</p>
-                <p class="subtitle lang-txt" data-fr="Disponible à partir de Juillet 2026." data-en="Available from July 2026.">Disponible à partir de Juillet 2026.</p>
+                <p class="subtitle lang-txt" data-fr="Disponible de Février à Avril 2027." data-en="Available from February to April 2027.">Disponible de Février à Avril 2027.</p>
                 <a href="mailto:a.afonso@student.isartdigital.com" class="email-link mag-btn">a.afonso@student.isartdigital.com</a>
                 <div class="social-links">
                     <a href="https://www.linkedin.com/in/anthony-afonso-a9272225b/" class="btn-cyberpunk small mag-btn">LINKEDIN</a>
@@ -283,25 +305,35 @@
         </section>
 
         <footer><p>© 2026 Anthony Afonso | <span class="sys-op">SYS.OP // ONLINE</span></p></footer>
-    </div>
+    </div> <!-- FIN DE #app-wrapper -->
 
-    <!-- MODALES -->
+    <!-- MODALES DES PROJETS -->
     <div id="project-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             
-            <div id="modal-synergy" class="modal-project-content" style="display: none;">
-                <h2 class="modal-title cyan-text">SYNERGY OS v95.0</h2>
-                <div class="modal-divider cyan-bg"></div>
-                <div class="video-container cyan-border"><video controls class="project-video"><source src="SynergyTrailer.mp4" type="video/mp4"></video></div>
-                <p class="lang-txt" data-fr="Plongez dans les entrailles d'un système d'exploitation obsolète. Résolvez des puzzles en détournant les interfaces classiques pour contourner la sécurité." data-en="Dive into an obsolete operating system. Solve puzzles by hijacking classic interfaces to bypass security.">Plongez dans les entrailles d'un système d'exploitation obsolète. Résolvez des puzzles en détournant les interfaces classiques pour contourner la sécurité.</p>
-            </div>
-
             <div id="modal-dusked" class="modal-project-content" style="display: none;">
                 <h2 class="modal-title magenta-text">DUSKED</h2>
                 <div class="modal-divider magenta-bg"></div>
-                <div class="video-container magenta-border"><video controls class="project-video"><source src="DuskedTrailer.mp4" type="video/mp4"></video></div>
-                <p class="lang-txt" data-fr="Survivre est votre seul objectif. Explorez un monde plongé dans l'obscurité, gérez vos ressources avec parcimonie et évitez les menaces." data-en="Survival is your only goal. Explore a world plunged in darkness, manage resources carefully and avoid threats.">Survivre est votre seul objectif. Explorez un monde plongé dans l'obscurité, gérez vos ressources avec parcimonie et évitez les menaces.</p>
+                <div class="video-container magenta-border"><video controls class="project-video"><source src="dusked1.mp4" type="video/mp4"></video></div>
+                <p class="lang-txt" data-fr="Une sombre nuit d’automne, Luna ne trouvait pas le sommeil, elle décida donc de changer ses pensées néfastes en sortant de chez elle. Cependant, rongée par l'empreinte de ses traumatismes, elle trouva réconfort auprès de son meilleur ami imaginaire afin de ne pas se laisser ronger par la colère, la culpabilité et les remords de son passé.<br><br>Dans Dusked, vous incarnez l’ami imaginaire de Luna et vous devez la protéger des ombres représentant l’empreinte de ses traumas passés. Attaquez sur le rythme de la musique dans ce jeu musical." data-en="On a dark autumn night, Luna couldn't sleep, so she decided to clear her dark thoughts by going outside. However, consumed by the imprint of her past traumas, she sought comfort in her imaginary best friend to avoid being consumed by the anger, guilt, and remorse of her past.<br><br>In Dusked, you play as Luna's imaginary friend and must protect her from shadows representing the imprint of her past traumas. Attack to the rhythm of the music in this musical game.">Une sombre nuit d’automne, Luna ne trouvait pas le sommeil, elle décida donc de changer ses pensées néfastes en sortant de chez elle. Cependant, rongée par l'empreinte de ses traumatismes, elle trouva réconfort auprès de son meilleur ami imaginaire afin de ne pas se laisser ronger par la colère, la culpabilité et les remords de son passé.<br><br>Dans Dusked, vous incarnez l’ami imaginaire de Luna et vous devez la protéger des ombres représentant l’empreinte de ses traumas passés. Attaquez sur le rythme de la musique dans ce jeu musical.</p>
+                <div class="modal-link-container"><a href="https://rydels5.itch.io/dusked" target="_blank" class="itch-link magenta-link lang-txt" data-fr='<i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO' data-en='<i class="fa-brands fa-itch-io"></i> PLAY ON ITCH.IO'><i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO</a></div>
+            </div>
+
+            <div id="modal-fling" class="modal-project-content" style="display: none;">
+                <h2 class="modal-title cyan-text">FLING</h2>
+                <div class="modal-divider cyan-bg"></div>
+                <div class="video-container cyan-border"><video controls class="project-video"><source src="FlingTrailer.mp4" type="video/mp4"></video></div>
+                <p class="lang-txt" data-fr="Fling est un jeu de plateforme 2.5D où vous contrôlez une petite créature gluante capable de prendre possession d'objets ronds ! Récupérez la clé dans chaque niveau pour ouvrir le passage vers le cœur de la planète !" data-en="Fling is a 2.5D platformer where you control a small gooey creature able to possess round objects! Collect the key in each level to unlock the path to the planet's core!">Fling est un jeu de plateforme 2.5D où vous contrôlez une petite créature gluante capable de prendre possession d'objets ronds ! Récupérez la clé dans chaque niveau pour ouvrir le passage vers le cœur de la planète !</p>
+                <div class="modal-link-container"><a href="https://loveneedlove.itch.io/fling" target="_blank" class="itch-link cyan-link lang-txt" data-fr='<i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO' data-en='<i class="fa-brands fa-itch-io"></i> PLAY ON ITCH.IO'><i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO</a></div>
+            </div>
+
+            <div id="modal-synergy" class="modal-project-content" style="display: none;">
+                <h2 class="modal-title cyan-text">SYNERGY OS v95.0</h2>
+                <div class="modal-divider cyan-bg"></div>
+                <div class="video-container cyan-border"><video controls class="project-video"><source src="synergy1.mp4" type="video/mp4"></video></div>
+                <p class="lang-txt" data-fr="En 2099, l'air extérieur est toxique. Pour survivre, vous avez loué vos organes vitaux à Synergy Corp et téléchargé votre esprit dans leur intranet d'entreprise : SYNERGY OS v95.0. Sous la surveillance de Mr. Synergie, un algorithme d'optimisation impitoyable, vous entamez un stage d'intégration où tout signe d'humanité est passible de licenciement immédiat (et définitif).<br><br>Dans cette interface rétro, vous devez explorer un open-space labyrinthique généré par le système. Accomplissez des mini-jeux de tâches corporatives absurdes et buvez l'eau des fontaines pour empêcher votre jauge de Burn-Out d'atteindre 100%, sous peine de subir l'ultime entretien de recadrage." data-en="In 2099, the outside air is toxic. To survive, you rented your vital organs to Synergy Corp and uploaded your mind into their corporate intranet: SYNERGY OS v95.0. Under the surveillance of Mr. Synergy, a ruthless optimization algorithm, you begin an integration internship where any sign of humanity is subject to immediate (and permanent) termination.<br><br>In this retro interface, you must explore a labyrinthine open-space generated by the system. Complete mini-games of absurd corporate tasks and drink from water coolers to keep your Burnout meter from reaching 100%, or face the ultimate disciplinary meeting.">En 2099, l'air extérieur est toxique. Pour survivre, vous avez loué vos organes vitaux à Synergy Corp et téléchargé votre esprit dans leur intranet d'entreprise : SYNERGY OS v95.0. Sous la surveillance de Mr. Synergie, un algorithme d'optimisation impitoyable, vous entamez un stage d'intégration où tout signe d'humanité est passible de licenciement immédiat (et définitif).<br><br>Dans cette interface rétro, vous devez explorer un open-space labyrinthique généré par le système. Accomplissez des mini-jeux de tâches corporatives absurdes et buvez l'eau des fontaines pour empêcher votre jauge de Burn-Out d'atteindre 100%, sous peine de subir l'ultime entretien de recadrage.</p>
+                <div class="modal-link-container"><a href="https://rydels5.itch.io/synergy-os-v950" target="_blank" class="itch-link cyan-link lang-txt" data-fr='<i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO' data-en='<i class="fa-brands fa-itch-io"></i> PLAY ON ITCH.IO'><i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO</a></div>
             </div>
 
             <div id="modal-kenjiro" class="modal-project-content" style="display: none;">
@@ -310,22 +342,6 @@
                 <div class="video-container cyan-border"><video controls class="project-video"><source src="KenjiroTrailer.mp4" type="video/mp4"></video></div>
                 <p class="lang-txt" data-fr="Kenjiro est un jeu de combat de samouraïs en 1 contre 1, jouable avec un seul bouton par joueur." data-en="Kenjiro is a 1v1 samurai fighting game playable with a single button per player.">Kenjiro est un jeu de combat de samouraïs en 1 contre 1, jouable avec un seul bouton par joueur.</p>
                 <div class="modal-link-container"><a href="https://rydels5.itch.io/kenjiro" target="_blank" class="itch-link cyan-link lang-txt" data-fr='<i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO' data-en='<i class="fa-brands fa-itch-io"></i> PLAY ON ITCH.IO'><i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO</a></div>
-            </div>
-
-            <div id="modal-fling" class="modal-project-content" style="display: none;">
-                <h2 class="modal-title cyan-text">FLING</h2>
-                <div class="modal-divider cyan-bg"></div>
-                <div class="video-container cyan-border"><video controls class="project-video"><source src="FlingTrailer.mp4" type="video/mp4"></video></div>
-                <p class="lang-txt" data-fr="Fling est un jeu de plateforme 2.5D où vous contrôlez une petite créature gluante capable de prendre possession d'objets ronds !" data-en="Fling is a 2.5D platformer where you control a small gooey creature able to possess round objects!">Fling est un jeu de plateforme 2.5D où vous contrôlez une petite créature gluante capable de prendre possession d'objets ronds !</p>
-                <div class="modal-link-container"><a href="https://loveneedlove.itch.io/fling" target="_blank" class="itch-link cyan-link lang-txt" data-fr='<i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO' data-en='<i class="fa-brands fa-itch-io"></i> PLAY ON ITCH.IO'><i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO</a></div>
-            </div>
-
-            <div id="modal-shapeshooter" class="modal-project-content" style="display: none;">
-                <h2 class="modal-title cyan-text">SPEC WAR</h2>
-                <div class="modal-divider cyan-bg"></div>
-                <div class="video-container cyan-border"><video controls class="project-video"><source src="ShapeTrailer.mp4" type="video/mp4"></video></div>
-                <p class="lang-txt" data-fr="SPEC WAR est un shooter mobile frénétique free to play en vue isométrique." data-en="SPEC WAR is a frenetic free-to-play mobile shooter with an isometric view.">SPEC WAR est un shooter mobile frénétique free to play en vue isométrique.</p>
-                <div class="modal-link-container"><a href="#" target="_blank" class="itch-link cyan-link lang-txt" data-fr='<i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO' data-en='<i class="fa-brands fa-itch-io"></i> PLAY ON ITCH.IO'><i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO</a></div>
             </div>
 
             <div id="modal-killer" class="modal-project-content" style="display: none;">
@@ -341,6 +357,14 @@
                 <div class="modal-divider magenta-bg"></div>
                 <div class="video-container magenta-border"><video controls class="project-video"><source src="MoonTrailer.mp4" type="video/mp4"></video></div>
                 <p class="lang-txt" data-fr="Jeu de plateau stratégique en miroir sous l'influence de la lune." data-en="Strategic mirror board game under the influence of the moon.">Jeu de plateau stratégique en miroir sous l'influence de la lune.</p>
+            </div>
+
+            <div id="modal-shapeshooter" class="modal-project-content" style="display: none;">
+                <h2 class="modal-title cyan-text">SPEC WAR</h2>
+                <div class="modal-divider cyan-bg"></div>
+                <div class="video-container cyan-border"><video controls class="project-video"><source src="ShapeTrailer.mp4" type="video/mp4"></video></div>
+                <p class="lang-txt" data-fr="SPEC WAR est un shooter mobile frénétique free to play en vue isométrique." data-en="SPEC WAR is a frenetic free-to-play mobile shooter with an isometric view.">SPEC WAR est un shooter mobile frénétique free to play en vue isométrique.</p>
+                <div class="modal-link-container"><a href="#" target="_blank" class="itch-link cyan-link lang-txt" data-fr='<i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO' data-en='<i class="fa-brands fa-itch-io"></i> PLAY ON ITCH.IO'><i class="fa-brands fa-itch-io"></i> JOUER SUR ITCH.IO</a></div>
             </div>
         </div>
     </div>

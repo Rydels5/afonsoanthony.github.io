@@ -11,14 +11,14 @@
 /* THEME: BLOCKOUT / GREYBOX (LEVEL DESIGN) */
 body.blockout-mode {
     --bg-color: #2b2b2b; --text-color: #111; --accent-color: #000;
-    --cyan: #ff7700; /* Orange Prototype */
-    --magenta: #0066ff; /* Bleu Prototype */
+    --cyan: #ff7700; 
+    --magenta: #0066ff; 
     --grid-color: rgba(0, 0, 0, 0.3);
 }
 body.blockout-mode .crt-overlay, body.blockout-mode #tv-overlay, 
 body.blockout-mode .speedlines, body.blockout-mode .fog-of-war { display: none !important; }
 body.blockout-mode * { box-shadow: none !important; text-shadow: none !important; border-radius: 0 !important; }
-body.blockout-mode img { filter: grayscale(100%) opacity(0.4) !important; }
+body.blockout-mode img, body.blockout-mode iframe, body.blockout-mode video { filter: grayscale(100%) opacity(0.4) !important; }
 body.blockout-mode .section { background: rgba(200,200,200,0.8); border: 2px dashed #ff7700; color: #111;}
 body.blockout-mode h1, body.blockout-mode h2, body.blockout-mode p, body.blockout-mode span { color: #111; }
 body.blockout-mode .tech-terminal { background: #eee; border: 2px solid #000; }
@@ -42,9 +42,14 @@ body.wireframe-mode * {
     background: transparent !important; border: 1px solid var(--cyan) !important; color: var(--cyan) !important;
     box-shadow: none !important; text-shadow: none !important; filter: none !important; backdrop-filter: none !important;
 }
-body.wireframe-mode img { opacity: 0.2; }
+body.wireframe-mode img, body.wireframe-mode iframe, body.wireframe-mode video { opacity: 0.2; }
 
-* { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+/* MASQUAGE DU CURSEUR SYSTÈME CIBLÉ */
+html, body, a, button, input, select, textarea, .project-card, .game-box, .close-btn, .itch-link, .mag-btn, .project-badge, .hologram-core {
+    cursor: none !important;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 ::selection { background: var(--cyan); color: #000; }
 
@@ -59,7 +64,7 @@ body.booting { overflow: hidden; height: 100vh; }
    UI GAMIFICATION (XP BAR)
    ========================================= */
 #xp-bar-container { position: fixed; top: 0; left: 0; width: 100vw; height: 5px; background: rgba(255,255,255,0.05); z-index: 99999; transition: height 0.3s; }
-#xp-bar { height: 100%; width: 0%; background: var(--cyan); box-shadow: 0 0 15px var(--cyan); transition: width 0.1s linear, background 0.3s; }
+#xp-bar { height: 100%; width: 0%; background: var(--cyan); box-shadow: 0 0 15px var(--cyan); transition: width 0.1s linear; }
 
 /* Achievement */
 #achievement-toast { position: fixed; bottom: -100px; right: 30px; background: rgba(10,10,15,0.9); border: 2px solid var(--magenta); box-shadow: 0 0 20px rgba(255,0,193,0.3); padding: 15px 25px; border-radius: 8px; display: flex; align-items: center; gap: 15px; z-index: 2000000; transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; }
@@ -190,7 +195,7 @@ h1, h2, h3, .box-title, .project-category, .btn-cyberpunk { font-family: var(--f
 
 /* NOYAU HOLOGRAPHIQUE */
 .hero-image-container { flex: 1; display: flex; justify-content: center; align-items: center; perspective: 1200px; }
-.hologram-core { position: relative; width: 300px; height: 300px; transform-style: preserve-3d; animation: float-core 6s ease-in-out infinite, breath 4s ease-in-out infinite alternate; cursor: none !important; }
+.hologram-core { position: relative; width: 300px; height: 300px; transform-style: preserve-3d; animation: float-core 6s ease-in-out infinite, breath 4s ease-in-out infinite alternate; }
 @keyframes breath { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
 
 .holo-ring { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 50%; transform-style: preserve-3d; transition: border-color 0.3s, box-shadow 0.3s; }
@@ -293,13 +298,50 @@ h1, h2, h3, .box-title, .project-category, .btn-cyberpunk { font-family: var(--f
 footer { text-align: center; padding: 3rem; color: var(--gray-color); font-family: var(--font-code); font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 5rem; transition: border-color 0.3s; }
 
 /* =========================================
-   DOUBLE CURSEUR & PARTICULES
+   DOUBLE CURSEUR (NETTOYÉ, SANS DÉCALAGE, 100% ROBUSTE)
    ========================================= */
-.cursor-dot { position: fixed; top: 0; left: 0; width: 6px; height: 6px; margin-left: -3px; margin-top: -3px; background: var(--magenta); border-radius: 50%; pointer-events: none; z-index: 2147483647 !important; box-shadow: 0 0 10px var(--magenta); transition: background-color 0.3s, box-shadow 0.3s; }
-.cursor-ring { position: fixed; top: 0; left: 0; width: 30px; height: 30px; margin-left: -15px; margin-top: -15px; border: 2px solid var(--cyan); border-radius: 50%; pointer-events: none; z-index: 2147483646 !important; background: rgba(0, 255, 249, 0.05); box-shadow: 0 0 10px var(--cyan), inset 0 0 10px var(--cyan); transition: width 0.2s ease, height 0.2s ease, margin-left 0.2s ease, margin-top 0.2s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
-.cursor-ring.hover-active { width: 60px; height: 60px; margin-left: -30px; margin-top: -30px; background-color: rgba(255, 0, 193, 0.1); border-color: var(--magenta); box-shadow: 0 0 15px var(--magenta), inset 0 0 15px var(--magenta); }
+#cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--magenta);
+    border-radius: 50%;
+    pointer-events: none !important;
+    z-index: 2147483647 !important;
+    box-shadow: 0 0 10px var(--magenta);
+    opacity: 0;
+    transition: opacity 0.3s;
+    will-change: transform;
+}
 
-.matrix-particle { position: fixed; color: var(--cyan); font-family: var(--font-code); font-size: 14px; font-weight: bold; pointer-events: none; z-index: 9998; text-shadow: 0 0 8px var(--cyan); animation: matrixFall 0.8s linear forwards; transition: color 0.3s, text-shadow 0.3s; }
+#cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--cyan);
+    border-radius: 50%;
+    pointer-events: none !important;
+    z-index: 2147483646 !important;
+    background: rgba(0, 255, 249, 0.05);
+    box-shadow: 0 0 10px var(--cyan), inset 0 0 10px var(--cyan);
+    opacity: 0;
+    transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, opacity 0.3s;
+    will-change: transform;
+}
+
+#cursor-ring.hover-active {
+    width: 55px;
+    height: 55px;
+    background-color: rgba(255, 0, 193, 0.1);
+    border-color: var(--magenta);
+    box-shadow: 0 0 15px var(--magenta), inset 0 0 15px var(--magenta);
+}
+
+.matrix-particle { position: fixed; top: 0; left: 0; color: var(--cyan); font-family: var(--font-code); font-size: 14px; font-weight: bold; pointer-events: none; z-index: 9998; text-shadow: 0 0 8px var(--cyan); animation: matrixFall 0.8s linear forwards; transition: color 0.3s, text-shadow 0.3s; will-change: transform; }
 @keyframes matrixFall { 0% { transform: translateY(0) scale(1); opacity: 0.8; } 100% { transform: translateY(50px) scale(0.5); opacity: 0; } }
 
 /* =========================================
@@ -316,8 +358,8 @@ footer { text-align: center; padding: 3rem; color: var(--gray-color); font-famil
 .cyan-text { color: var(--cyan); text-shadow: 0 0 15px rgba(0,255,249,0.5); transition: color 0.3s; }
 .magenta-text { color: var(--magenta); text-shadow: 0 0 15px rgba(255,0,193,0.5); transition: color 0.3s; }
 .modal-divider { height: 4px; width: 80px; margin-bottom: 40px; background: var(--cyan); box-shadow: 0 0 15px var(--cyan); transition: background 0.3s, box-shadow 0.3s;}
-.video-container { width: 100%; border-radius: 4px; margin-bottom: 40px; background: #000; overflow: hidden; position: relative; cursor: none !important; box-shadow: 0 0 30px rgba(0,255,249,0.15); border-left: 3px solid var(--cyan); transition: border-color 0.3s; }
-.project-video { width: 100%; height: auto; display: block; outline: none; cursor: none !important; }
+.video-container { width: 100%; border-radius: 4px; margin-bottom: 40px; background: #000; overflow: hidden; position: relative; box-shadow: 0 0 30px rgba(0,255,249,0.15); border-left: 3px solid var(--cyan); transition: border-color 0.3s; }
+.project-video { width: 100%; height: auto; display: block; outline: none; }
 .itch-link { display: inline-block; padding: 15px 40px; font-family: var(--font-heading); font-size: 1.2rem; font-weight: bold; text-transform: uppercase; text-decoration: none; border-radius: 4px; transition: all 0.3s ease; clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); border: 2px solid var(--cyan); color: var(--cyan); }
 .itch-link:hover { background: var(--cyan); color: #000; box-shadow: 0 0 30px var(--cyan); }
 
