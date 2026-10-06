@@ -3,7 +3,6 @@
 // =========================================
 if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
 
-// Intersection Observer (Initialisé tôt pour assurer l'affichage)
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -20,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
         const boot = document.getElementById('boot-screen');
-        if(boot) boot.remove(); // Retire complètement l'écran de chargement
+        if(boot) boot.remove(); 
         
         const tvOverlay = document.getElementById('tv-overlay');
         const appWrapper = document.getElementById('app-wrapper');
@@ -35,12 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if(appWrapper) appWrapper.classList.add('tv-revealed');
             document.body.classList.remove('booting');
             
-            // Activation du scroll révèle
             document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
-
             typeTerminalText();
 
-            // Nettoyage final pour ne jamais bloquer la souris
             setTimeout(() => { if(tvOverlay) tvOverlay.remove(); }, 600);
             setTimeout(() => { if(appWrapper) appWrapper.classList.remove('tv-revealed'); }, 1200); 
         }, 450); 
@@ -64,7 +60,7 @@ if(langToggleBtn) {
         if(textIndicator) textIndicator.innerText = currentLang === 'fr' ? 'EN' : 'FR';
         
         document.querySelectorAll('.lang-txt').forEach(el => {
-            const translation = el.getAttribute(`data-${currentLang}`);
+            const translation = el.getAttribute('data-' + currentLang);
             if(translation) {
                 el.innerHTML = translation;
                 if(el.classList.contains('scramble-title')) scrambleText(el, true);
@@ -73,7 +69,7 @@ if(langToggleBtn) {
         
         const btnText = document.querySelector('#btn-init .btn-text');
         if(btnText) {
-            const btnVal = btnText.getAttribute(`data-${currentLang}`);
+            const btnVal = btnText.getAttribute('data-' + currentLang);
             if(btnVal) {
                 btnText.setAttribute('data-value', btnVal);
                 scrambleText(btnText, true);
@@ -81,13 +77,13 @@ if(langToggleBtn) {
         }
         
         document.querySelectorAll('.lang-nav').forEach(el => {
-            const navLabel = el.getAttribute(`data-${currentLang}`);
+            const navLabel = el.getAttribute('data-' + currentLang);
             if(navLabel) el.setAttribute('data-label', navLabel);
         });
         
         const term = document.querySelector('.auto-type');
         if(term) {
-            const termVal = term.getAttribute(`data-${currentLang}`);
+            const termVal = term.getAttribute('data-' + currentLang);
             if(termVal) {
                 term.setAttribute('data-string', termVal);
                 typeTerminalText();
@@ -97,86 +93,74 @@ if(langToggleBtn) {
 }
 
 // =========================================
-// 2. MOTEUR DU CURSEUR (INFAILLIBLE SÉCURITÉ ABSOLUE)
+// 2. MOTEUR DU CURSEUR ET PARALLAXE (SÉCURISÉ 100%)
 // =========================================
-const cursorDot = document.getElementById('cursor-dot');
-const cursorRing = document.getElementById('cursor-ring');
-
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
 let dotX = mouseX;
 let dotY = mouseY;
 let ringX = mouseX;
 let ringY = mouseY;
-let isCursorActive = false;
+let isCursorVisible = false;
+let isTouchMode = false;
 
-const matrixChars = ['0', '1', 'x', '+', 'SYS', 'NULL'];
+const cursorDot = document.getElementById('cursor-dot');
+const cursorRing = document.getElementById('cursor-ring');
 
-function updateCursorPosition(e) {
-    // SÉCURITÉ 1 : Ignore les faux événements (0,0) envoyés par certains navigateurs au chargement
-    if (e.clientX === 0 && e.clientY === 0) return;
+window.addEventListener('touchstart', () => {
+    isTouchMode = true;
+    isCursorVisible = false;
+    if (cursorDot) cursorDot.style.opacity = '0';
+    if (cursorRing) cursorRing.style.opacity = '0';
+}, { passive: true });
 
+window.addEventListener('mousemove', (e) => {
+    isTouchMode = false;
+
+    if (typeof e.clientX !== 'number' || typeof e.clientY !== 'number') return;
+    
     mouseX = e.clientX;
     mouseY = e.clientY;
 
-    if (!isCursorActive) {
+    if (!isCursorVisible) {
         if (cursorDot) cursorDot.style.opacity = '1';
         if (cursorRing) cursorRing.style.opacity = '1';
-        dotX = mouseX; 
+        dotX = mouseX;
         dotY = mouseY;
-        ringX = mouseX; 
+        ringX = mouseX;
         ringY = mouseY;
-        isCursorActive = true;
+        isCursorVisible = true;
     }
 
-    // Parallaxe Fond & Grille
     const cyberGrid = document.querySelector('.cyber-grid-container');
     const cyberGlow = document.querySelector('.cyber-grid-glow');
     const parallaxBg = document.getElementById('parallax-bg');
     const xOffset = (mouseX / window.innerWidth - 0.5);
     const yOffset = (mouseY / window.innerHeight - 0.5);
     
-    if (cyberGrid && cyberGlow) {
-        cyberGrid.style.transform = `perspective(600px) rotateX(75deg) translateX(${xOffset * 40}px)`;
-        cyberGlow.style.left = mouseX + 'px'; 
-        cyberGlow.style.top = (mouseY + 200) + 'px'; 
+    if (cyberGrid) cyberGrid.style.transform = "perspective(600px) rotateX(75deg) translateX(" + (xOffset * 40) + "px)";
+    if (cyberGlow) {
+        cyberGlow.style.left = mouseX + "px"; 
+        cyberGlow.style.top = (mouseY + 200) + "px"; 
     }
-    if (parallaxBg) {
-        parallaxBg.style.transform = `translate(${xOffset * -20}px, ${yOffset * -20}px)`;
-    }
+    if (parallaxBg) parallaxBg.style.transform = "translate(" + (xOffset * -20) + "px, " + (yOffset * -20) + "px)";
+});
 
-    if (Math.random() > 0.88) { 
-        const particle = document.createElement('div');
-        particle.classList.add('matrix-particle');
-        // Particules utilisent translate3d avec base top:0 left:0 CSS
-        particle.style.transform = `translate3d(${mouseX - 10 + Math.random() * 20}px, ${mouseY - 10 + Math.random() * 20}px, 0)`;
-        particle.innerText = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-        document.body.appendChild(particle);
-        setTimeout(() => particle.remove(), 800);
-    }
-}
-
-// SÉCURITÉ 2 : On écoute les événements de pointage à la racine de window
-window.addEventListener('pointermove', updateCursorPosition, { passive: true });
-window.addEventListener('mousemove', updateCursorPosition, { passive: true });
-
-// SÉCURITÉ 3 : Boucle d'animation fluide
 function renderCursor() {
-    if (isCursorActive) {
-        // Le point est très réactif, l'anneau est lissé
+    if (isCursorVisible && !isTouchMode) {
         dotX += (mouseX - dotX) * 0.8;
         dotY += (mouseY - dotY) * 0.8;
         ringX += (mouseX - ringX) * 0.2;
         ringY += (mouseY - ringY) * 0.2;
         
-        if (cursorDot) cursorDot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
-        if (cursorRing) cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+        if (cursorDot) cursorDot.style.transform = "translate3d(" + dotX + "px, " + dotY + "px, 0) translate(-50%, -50%)";
+        if (cursorRing) cursorRing.style.transform = "translate3d(" + ringX + "px, " + ringY + "px, 0) translate(-50%, -50%)";
     }
     requestAnimationFrame(renderCursor);
 }
 requestAnimationFrame(renderCursor);
 
-const cliquables = 'a, button, .project-card, .game-box-wrapper, .close-btn, video, iframe, .itch-link, .mag-btn, .project-badge, .hologram-core';
+const cliquables = 'a, button, .project-card:not(.project-disabled), .game-box-wrapper, .close-btn, video, iframe, .itch-link, .doc-link, .mag-btn, .project-badge, .hologram-core';
 document.addEventListener('mouseover', (e) => {
     if (e.target.closest(cliquables) && cursorRing) cursorRing.classList.add('hover-active');
 });
@@ -321,7 +305,7 @@ window.addEventListener('scroll', () => {
     
     const fog = document.querySelector('.fog-of-war');
     if(fog) {
-        fog.style.transform = `translateY(${scrollTop * 0.5}px)`;
+        fog.style.transform = "translateY(" + (scrollTop * 0.5) + "px)";
         if(scrollTop > scrollHeight - 300) fog.style.opacity = '0';
         else fog.style.opacity = '1';
     }
@@ -379,7 +363,7 @@ document.querySelectorAll('.map-dot').forEach(dot => {
 });
 
 // =========================================
-// 7. SCRAMBLE TEXT (PROTÉGÉ)
+// 7. SCRAMBLE TEXT
 // =========================================
 const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
 function scrambleText(element, force = false) {
@@ -439,19 +423,21 @@ window.closeModal = function() {
 window.onclick = function(e) { if (e.target == modal) closeModal(); };
 
 // =========================================
-// 9. TILT 3D, MAG-BTNS, HYPERSPACE
+// 9. TILT 3D ET EFFETS MAGNETIQUES
 // =========================================
-const tiltCards = document.querySelectorAll('.tilt-card, .tilt-box');
+const tiltCards = document.querySelectorAll('.tilt-card:not(.project-disabled), .tilt-box');
+
 tiltCards.forEach(card => {
     card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left, y = e.clientY - rect.top;
         const centerX = rect.width / 2, centerY = rect.height / 2;
         const multiplier = card.classList.contains('tilt-box') ? 10 : 6;
-        card.style.transform = `perspective(1000px) rotateX(${((y - centerY) / centerY) * -multiplier}deg) rotateY(${((x - centerX) / centerX) * multiplier}deg) scale3d(1.02, 1.02, 1.02)`;
+        
+        card.style.transform = "perspective(1000px) rotateX(" + (((y - centerY) / centerY) * -multiplier) + "deg) rotateY(" + (((x - centerX) / centerX) * multiplier) + "deg) scale3d(1.02, 1.02, 1.02)";
     });
     card.addEventListener('mouseleave', () => {
-        card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+        card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)";
         card.style.transition = 'transform 0.5s ease';
         setTimeout(() => { card.style.transition = ''; }, 500); 
     });
@@ -461,12 +447,13 @@ document.querySelectorAll('.mag-btn').forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
         const rect = btn.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2, y = e.clientY - rect.top - rect.height / 2;
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        
+        btn.style.transform = "translate(" + (x * 0.3) + "px, " + (y * 0.3) + "px)";
         btn.style.transition = 'none'; 
     });
     btn.addEventListener('mouseleave', () => {
         btn.style.transition = 'transform 0.3s ease'; 
-        btn.style.transform = `translate(0px, 0px)`;
+        btn.style.transform = "translate(0px, 0px)";
     });
 });
 
