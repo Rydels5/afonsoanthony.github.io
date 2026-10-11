@@ -693,3 +693,21 @@ document.addEventListener("DOMContentLoaded", () => {
         renderer.setSize(container.clientWidth, container.clientHeight);
     });
 });
+
+
+// =========================================
+// 6.5 ACHIEVEMENT "EXPLORATION 100%"
+// =========================================
+const contactSection = document.getElementById('contact');
+let portfolioExplored = false;
+
+const achievementObserver = new IntersectionObserver((entries) => {
+    if(entries[0] && entries[0].isIntersecting && !portfolioExplored) {
+        portfolioExplored = true;
+        const title = document.documentElement.lang === 'fr' ? "SUCCÈS DÉVERROUILLÉ" : "ACHIEVEMENT UNLOCKED";
+        const desc = document.documentElement.lang === 'fr' ? "A exploré le portfolio à 100% !" : "Explored the portfolio to 100% !";
+        triggerAchievement(title, desc);
+    }
+}, { threshold: 0.5 });
+
+if(contactSection) achievementObserver.observe(contactSection);
