@@ -102,6 +102,7 @@ let isCursorVisible = false, isTouchMode = false;
 const cursorDot = document.getElementById('cursor-dot');
 const cursorRing = document.getElementById('cursor-ring');
 
+// Détection tactile pour cacher le curseur
 window.addEventListener('touchstart', () => {
     isTouchMode = true; isCursorVisible = false;
     if (cursorDot) cursorDot.style.opacity = '0';
@@ -109,9 +110,10 @@ window.addEventListener('touchstart', () => {
 }, { passive: true });
 
 window.addEventListener('mousemove', (e) => {
-    isTouchMode = false;
-    if (typeof e.clientX !== 'number' || typeof e.clientY !== 'number') return;
+    // Si c'était du tactile avant, on n'affiche pas la souris suite à un faux event move
+    if (isTouchMode) return; 
     
+    if (typeof e.clientX !== 'number' || typeof e.clientY !== 'number') return;
     mouseX = e.clientX; mouseY = e.clientY;
 
     if (!isCursorVisible) {
@@ -148,7 +150,7 @@ requestAnimationFrame(renderCursor);
 
 const cliquables = 'a, button, .game-box-wrapper, .close-btn, video, iframe, .itch-link, .doc-link, .mag-btn, .hologram-core, .node-chip';
 document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(cliquables) && cursorRing) cursorRing.classList.add('hover-active');
+    if (e.target.closest(cliquables) && cursorRing && !isTouchMode) cursorRing.classList.add('hover-active');
 });
 document.addEventListener('mouseout', (e) => {
     if (e.target.closest(cliquables) && cursorRing) cursorRing.classList.remove('hover-active');
@@ -180,7 +182,9 @@ if(terminal && userTypingArea) {
             typedWord += e.key.toUpperCase();
             
             if(typedWord.includes("HIRE")) {
-                triggerAchievement("COMPÉTENCE DÉVERROUILLÉE", "Embauche imminente !");
+                const title = document.documentElement.lang === 'fr' ? "COMPÉTENCE DÉVERROUILLÉE" : "SKILL UNLOCKED";
+                const desc = document.documentElement.lang === 'fr' ? "Embauche imminente !" : "Hiring imminent!";
+                triggerAchievement(title, desc);
                 typedWord = ""; 
                 userTypingArea.style.color = "#39ff14"; 
             }
@@ -263,7 +267,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 // =========================================
-// 6. XP BAR & SCROLL
+// 6. XP BAR, SCROLL & ACHIEVEMENTS
 // =========================================
 const crtOverlay = document.querySelector('.crt-overlay');
 let scrollTimeout;
@@ -309,6 +313,19 @@ function triggerAchievement(title, desc) {
         setTimeout(() => { toast.classList.remove('show'); }, 4000);
     }
 }
+
+// TROPHÉE EXPLORATION 100%
+const contactSection = document.getElementById('contact');
+let portfolioExplored = false;
+const achievementObserver = new IntersectionObserver((entries) => {
+    if(entries[0] && entries[0].isIntersecting && !portfolioExplored) {
+        portfolioExplored = true;
+        const title = document.documentElement.lang === 'fr' ? "SUCCÈS DÉVERROUILLÉ" : "ACHIEVEMENT UNLOCKED";
+        const desc = document.documentElement.lang === 'fr' ? "A exploré le portfolio à 100% !" : "Explored the portfolio to 100% !";
+        triggerAchievement(title, desc);
+    }
+}, { threshold: 0.5 });
+if(contactSection) achievementObserver.observe(contactSection);
 
 document.querySelectorAll('.map-dot').forEach(dot => {
     dot.addEventListener('click', () => {
@@ -407,14 +424,13 @@ if(btnInit) {
 }
 
 // ========================================================
-// 10. MOTEUR 3D DES PROJETS (SANS BUGS)
+// 10. MOTEUR 3D DES PROJETS (OPTIMISÉ MOBILE)
 // ========================================================
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById('cyberspace-container');
     if (!container) return;
 
-    // --- DONNÉES CLAIRES (COULEURS PAR TYPE DE PROJET) ---
-    // Bleu/Cyan = SOLO | Violet/Magenta = GROUPE
+    // --- DONNÉES CLAIRES ---
     const cyberNodes = [
         { id: 'modal-synergy', name: "SYNERGY OS v95.0", category: "PUZZLE / OS SIMULATOR", team: "PROJET SOLO", color: 0x00fff9, css: "var(--cyan)", pos: [0, 0, 5], image: "synergy1.png" },
         { id: 'modal-dusked', name: "DUSKED", category: "JEU DE RYTHME", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [-6, 0, -2], image: "dusked1.png" },
@@ -436,7 +452,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // OPTIMISATION MOBILE : Ratio max limité à 1.5 pour garder 60fps
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     container.appendChild(renderer.domElement);
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -465,11 +482,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const group = new THREE.Group();
         group.position.set(node.pos[0], node.pos[1], node.pos[2]);
 
-        // HITBOX INVISIBLE POUR UNE NAVIGATION SANS BUG
-        const hitboxGeo = new THREE.SphereGeometry(3, 16, 16);
+        const hitboxGeo = new THREE.SphereGeometry(3.5, 16, 16);
         const hitboxMat = new THREE.MeshBasicMaterial({ visible: false });
         const hitbox = new THREE.Mesh(hitboxGeo, hitboxMat);
-        hitbox.userData = node; // On attache les données à la hitbox directement
+        hitbox.userData = node; 
         group.add(hitbox);
 
         const baseGeo = new THREE.CylinderGeometry(1.6, 1.3, 0.6, 6);
@@ -503,8 +519,7 @@ document.addEventListener("DOMContentLoaded", () => {
         nodeObjects.push({ group, hitbox, crystal, ring, baseY: node.pos[1], data: node });
     });
 
-    // --- PARTICULES DE FLUX ---
-    const partCount = 1000;
+    const partCount = 800;
     const partGeo = new THREE.BufferGeometry();
     const partPos = new Float32Array(partCount * 3);
     for(let i = 0; i < partCount * 3; i++) { partPos[i] = (Math.random() - 0.5) * 70; }
@@ -513,7 +528,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const partSystem = new THREE.Points(partGeo, partMat);
     scene.add(partSystem);
 
-    // --- INTERACTIONS SANS BUG ---
+    // --- INTERACTIONS ---
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     let hoveredGroup = null;
@@ -525,6 +540,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hudImgContainer = document.getElementById('cyber-image-container');
     const hudImg = document.getElementById('cyber-hud-image');
 
+    // Sur Mobile, un tap déclenchera move puis down. Sur Desktop, la souris survole.
     container.addEventListener('pointermove', (e) => {
         if (isCinematicFlying) return;
         const rect = container.getBoundingClientRect();
@@ -532,7 +548,6 @@ document.addEventListener("DOMContentLoaded", () => {
         mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        // ON RAYCAST UNIQUEMENT SUR LES HITBOXES (FIABILITÉ 100%)
         const intersects = raycaster.intersectObjects(nodeObjects.map(n => n.hitbox));
 
         if (intersects.length > 0) {
@@ -543,7 +558,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 hoveredGroup = targetObj;
                 const d = hoveredGroup.data;
                 
-                // MAJ HUD (Texte clair sans glitch)
                 hudTargetName.innerText = d.name;
                 hudTargetName.style.color = d.css;
                 hudTargetName.style.textShadow = `0 0 15px ${d.css}`;
@@ -551,14 +565,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 hudTargetCat.innerText = `// ${d.category} //`;
                 hudTargetCat.style.color = d.css;
 
-                // MAJ BADGE SOLO/GROUPE
                 hudTargetTeam.innerText = d.team;
                 hudTargetTeam.style.display = "inline-block";
                 hudTargetTeam.style.color = d.css;
                 hudTargetTeam.style.borderColor = d.css;
                 hudTargetTeam.style.boxShadow = `0 0 10px ${d.css} inset`;
                 
-                // MAJ IMAGE SANS FILTRE
                 if(d.image && d.image !== "") {
                     hudImg.src = d.image;
                     hudImgContainer.style.display = 'block';
@@ -568,7 +580,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     hudImgContainer.style.display = 'none';
                 }
                 
-                if (cursorRing) cursorRing.classList.add('hover-active');
+                if (cursorRing && !isTouchMode) cursorRing.classList.add('hover-active');
                 gsap.to(hoveredGroup.group.scale, { x: 1.25, y: 1.25, z: 1.25, duration: 0.3, ease: "back.out(1.7)" });
             }
         } else {
@@ -576,7 +588,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 gsap.to(hoveredGroup.group.scale, { x: 1, y: 1, z: 1, duration: 0.3 });
                 hoveredGroup = null;
                 
-                hudTargetName.innerText = "SURVOLEZ UN PROJET";
+                hudTargetName.innerText = isTouchMode ? "SÉLECTIONNEZ UN PROJET" : "SURVOLEZ UN PROJET";
                 hudTargetName.style.color = "var(--cyan)";
                 hudTargetName.style.textShadow = "0 0 15px var(--cyan)";
                 
@@ -591,7 +603,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- VOL CINÉMATIQUE VERS LE PROJET ---
     function flyToNode(targetObj) {
         if (isCinematicFlying || !targetObj) return;
         const d = targetObj.data;
@@ -616,14 +627,27 @@ document.addEventListener("DOMContentLoaded", () => {
             duration: 1.4,
             ease: "power3.inOut",
             onUpdate: () => controls.update(),
-            onComplete: () => {
-                openModal(d.id);
-            }
+            onComplete: () => { openModal(d.id); }
         });
     }
 
-    container.addEventListener('pointerdown', () => {
-        if (hoveredGroup) flyToNode(hoveredGroup);
+    // Le clic/tap confirme l'action
+    // Renforcement pour mobile : on refait un raycast au moment du "down"
+    container.addEventListener('pointerdown', (e) => {
+        if (isCinematicFlying) return;
+        
+        const rect = container.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(nodeObjects.map(n => n.hitbox));
+
+        if (intersects.length > 0) {
+            const hitData = intersects[0].object.userData;
+            const targetObj = nodeObjects.find(n => n.data.id === hitData.id);
+            flyToNode(targetObj);
+        }
     });
 
     window.triggerNodeFly = function(modalId) {
@@ -648,7 +672,8 @@ document.addEventListener("DOMContentLoaded", () => {
             onComplete: () => {
                 controls.enabled = true;
                 isCinematicFlying = false;
-                hudTargetName.innerText = "SURVOLEZ UN PROJET";
+                hoveredGroup = null;
+                hudTargetName.innerText = isTouchMode ? "SÉLECTIONNEZ UN PROJET" : "SURVOLEZ UN PROJET";
                 hudImgContainer.style.display = 'none';
                 hudTargetTeam.style.display = "none";
             }
@@ -693,21 +718,3 @@ document.addEventListener("DOMContentLoaded", () => {
         renderer.setSize(container.clientWidth, container.clientHeight);
     });
 });
-
-
-// =========================================
-// 6.5 ACHIEVEMENT "EXPLORATION 100%"
-// =========================================
-const contactSection = document.getElementById('contact');
-let portfolioExplored = false;
-
-const achievementObserver = new IntersectionObserver((entries) => {
-    if(entries[0] && entries[0].isIntersecting && !portfolioExplored) {
-        portfolioExplored = true;
-        const title = document.documentElement.lang === 'fr' ? "SUCCÈS DÉVERROUILLÉ" : "ACHIEVEMENT UNLOCKED";
-        const desc = document.documentElement.lang === 'fr' ? "A exploré le portfolio à 100% !" : "Explored the portfolio to 100% !";
-        triggerAchievement(title, desc);
-    }
-}, { threshold: 0.5 });
-
-if(contactSection) achievementObserver.observe(contactSection);
