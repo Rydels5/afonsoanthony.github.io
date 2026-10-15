@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0); 
     document.body.classList.add('booting'); 
 
-    // GESTION DE L'ÉCRAN DE CHARGEMENT
     setTimeout(() => {
         const boot = document.getElementById('boot-screen');
         if(boot) boot.remove(); 
@@ -93,40 +92,51 @@ if(langToggleBtn) {
 }
 
 // =========================================
-// 1.5. ACCORDÉON COMPÉTENCES (SÉCURISÉ)
+// 1.5. ACCORDÉON COMPÉTENCES (3 BLOCS)
 // =========================================
 window.toggleSkills = function(id, headerElement) {
     const content = document.getElementById(id);
-    if(!content) return;
+    if (!content) return;
     
-    if(content.classList.contains('active')) {
-        content.classList.remove('active');
-        headerElement.classList.remove('active');
-    } else {
+    const isOpened = content.classList.contains('active');
+    
+    // Ferme tous les autres blocs pour garder la page propre
+    document.querySelectorAll('.skills-content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.shelf-header').forEach(h => h.classList.remove('active'));
+    
+    if (!isOpened) {
         content.classList.add('active');
         headerElement.classList.add('active');
     }
 };
 
 // =========================================
-// 2. MOTEUR DU CURSEUR ET PARALLAXE
+// 2. MOTEUR DU CURSEUR ROBUSTE (100% OPÉRATIONNEL)
 // =========================================
-let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-let dotX = mouseX, dotY = mouseY;
-let ringX = mouseX, ringY = mouseY;
-let isDesktop = window.matchMedia("(pointer: fine)").matches;
+let mouseX = -100, mouseY = -100;
+let dotX = -100, dotY = -100;
+let ringX = -100, ringY = -100;
+let isCursorActive = false;
 
 const cursorDot = document.getElementById('cursor-dot');
 const cursorRing = document.getElementById('cursor-ring');
 
 window.addEventListener('mousemove', (e) => {
-    if (!isDesktop) return; 
-    
     if (typeof e.clientX !== 'number' || typeof e.clientY !== 'number') return;
-    mouseX = e.clientX; mouseY = e.clientY;
+    
+    mouseX = e.clientX;
+    mouseY = e.clientY;
 
-    if (cursorDot) cursorDot.style.opacity = '1';
-    if (cursorRing) cursorRing.style.opacity = '1';
+    if (!isCursorActive) {
+        dotX = mouseX;
+        dotY = mouseY;
+        ringX = mouseX;
+        ringY = mouseY;
+        isCursorActive = true;
+        document.body.classList.add('custom-cursor-active');
+        if (cursorDot) cursorDot.style.opacity = '1';
+        if (cursorRing) cursorRing.style.opacity = '1';
+    }
 
     const cyberGrid = document.querySelector('.cyber-grid-container');
     const cyberGlow = document.querySelector('.cyber-grid-glow');
@@ -134,23 +144,27 @@ window.addEventListener('mousemove', (e) => {
     const xOffset = (mouseX / window.innerWidth - 0.5);
     const yOffset = (mouseY / window.innerHeight - 0.5);
     
-    if (cyberGrid) cyberGrid.style.transform = "perspective(600px) rotateX(75deg) translateX(" + (xOffset * 40) + "px)";
-    if (cyberGlow) { cyberGlow.style.left = mouseX + "px"; cyberGlow.style.top = (mouseY + 200) + "px"; }
-    if (parallaxBg) parallaxBg.style.transform = "translate(" + (xOffset * -20) + "px, " + (yOffset * -20) + "px)";
+    if (cyberGrid) cyberGrid.style.transform = `perspective(600px) rotateX(75deg) translateX(${xOffset * 40}px)`;
+    if (cyberGlow) { cyberGlow.style.left = `${mouseX}px`; cyberGlow.style.top = `${mouseY + 200}px`; }
+    if (parallaxBg) parallaxBg.style.transform = `translate(${xOffset * -20}px, ${yOffset * -20}px)`;
 });
 
+window.addEventListener('touchstart', () => {
+    isCursorActive = false;
+    document.body.classList.remove('custom-cursor-active');
+    if (cursorDot) cursorDot.style.opacity = '0';
+    if (cursorRing) cursorRing.style.opacity = '0';
+}, { passive: true });
+
 function renderCursor() {
-    if (isDesktop) {
+    if (isCursorActive) {
         dotX += (mouseX - dotX) * 0.8;
         dotY += (mouseY - dotY) * 0.8;
-        ringX += (mouseX - ringX) * 0.2;
-        ringY += (mouseY - ringY) * 0.2;
+        ringX += (mouseX - ringX) * 0.25;
+        ringY += (mouseY - ringY) * 0.25;
         
-        if (cursorDot) cursorDot.style.transform = "translate3d(" + dotX + "px, " + dotY + "px, 0) translate(-50%, -50%)";
-        if (cursorRing) cursorRing.style.transform = "translate3d(" + ringX + "px, " + ringY + "px, 0) translate(-50%, -50%)";
-    } else {
-        if(cursorDot) cursorDot.style.display = 'none';
-        if(cursorRing) cursorRing.style.display = 'none';
+        if (cursorDot) cursorDot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
+        if (cursorRing) cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
     }
     requestAnimationFrame(renderCursor);
 }
@@ -158,7 +172,7 @@ requestAnimationFrame(renderCursor);
 
 const cliquables = 'a, button, .game-box-wrapper, .close-btn, video, iframe, .itch-link, .doc-link, .mag-btn, .hologram-core, .node-chip, .shelf-header';
 document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(cliquables) && cursorRing && isDesktop) cursorRing.classList.add('hover-active');
+    if (e.target.closest(cliquables) && cursorRing && isCursorActive) cursorRing.classList.add('hover-active');
 });
 document.addEventListener('mouseout', (e) => {
     if (e.target.closest(cliquables) && cursorRing) cursorRing.classList.remove('hover-active');
@@ -172,30 +186,30 @@ const terminal = document.getElementById('interactive-terminal');
 let isHoveringTerminal = false;
 let typedWord = "";
 
-if(terminal && userTypingArea) {
+if (terminal && userTypingArea) {
     terminal.addEventListener('mouseenter', () => {
         isHoveringTerminal = true;
         const hint = document.querySelector('.terminal-hint');
-        if(hint) hint.style.color = 'var(--cyan)';
+        if (hint) hint.style.color = 'var(--cyan)';
     });
     terminal.addEventListener('mouseleave', () => {
         isHoveringTerminal = false;
         const hint = document.querySelector('.terminal-hint');
-        if(hint) hint.style.color = 'rgba(255,255,255,0.2)';
+        if (hint) hint.style.color = 'rgba(255,255,255,0.2)';
     });
 
     document.addEventListener('keydown', (e) => {
-        if(isHoveringTerminal && e.key.length === 1) { 
+        if (isHoveringTerminal && e.key.length === 1) { 
             userTypingArea.innerText += e.key;
             typedWord += e.key.toUpperCase();
             
-            if(typedWord.includes("HIRE")) {
+            if (typedWord.includes("HIRE")) {
                 triggerAchievement("COMPÉTENCE DÉVERROUILLÉE", "Embauche imminente !");
                 typedWord = ""; 
                 userTypingArea.style.color = "#39ff14"; 
             }
         }
-        if(isHoveringTerminal && e.key === "Backspace") {
+        if (isHoveringTerminal && e.key === "Backspace") {
             userTypingArea.innerText = userTypingArea.innerText.slice(0, -1);
             typedWord = typedWord.slice(0, -1);
         }
@@ -204,23 +218,23 @@ if(terminal && userTypingArea) {
 
 function typeTerminalText() {
     const el = document.querySelector('.auto-type');
-    if(!el) return;
+    if (!el) return;
     const text = el.getAttribute('data-string');
-    if(!text) return;
+    if (!text) return;
     el.innerHTML = '';
     let i = 0;
     clearTimeout(currentTypingTimeout);
     
     function typeWriter() {
         if (i < text.length) {
-            if(text.charAt(i) === '<' || text.charAt(i) === '[') {
+            if (text.charAt(i) === '<' || text.charAt(i) === '[') {
                 let tag = "";
-                while(text.charAt(i) !== '>' && text.charAt(i) !== ']' && i < text.length) { tag += text.charAt(i); i++; }
+                while (text.charAt(i) !== '>' && text.charAt(i) !== ']' && i < text.length) { tag += text.charAt(i); i++; }
                 tag += text.charAt(i); el.innerHTML += tag; i++; 
                 typeWriter();
-            } else if(text.charAt(i) === '^') {
+            } else if (text.charAt(i) === '^') {
                 i++; let timeStr = "";
-                while(text.charAt(i) !== '<' && text.charAt(i) !== '[' && i < text.length) { timeStr += text.charAt(i); i++; }
+                while (text.charAt(i) !== '<' && text.charAt(i) !== '[' && i < text.length) { timeStr += text.charAt(i); i++; }
                 currentTypingTimeout = setTimeout(typeWriter, parseInt(timeStr) || 500);
             } else {
                 el.innerHTML += text.charAt(i); i++;
@@ -238,13 +252,13 @@ let blockoutActive = false;
 window.triggerBlockoutMode = function() {
     blockoutActive = !blockoutActive; 
     const hint = document.querySelector('.overdrive-hint');
-    if(blockoutActive) {
+    if (blockoutActive) {
         document.body.classList.add('blockout-mode');
-        if(hint) hint.innerText = "[ DEV MODE ACTIVE ]";
+        if (hint) hint.innerText = "[ DEV MODE ACTIVE ]";
         triggerAchievement("PIPELINE MAÎTRISÉ", "Le mode Greybox a été activé.");
     } else {
         document.body.classList.remove('blockout-mode');
-        if(hint) hint.innerText = "[ TOGGLE GREYBOX ]";
+        if (hint) hint.innerText = "[ TOGGLE GREYBOX ]";
     }
 };
 
@@ -252,7 +266,7 @@ window.triggerBlockoutMode = function() {
 // 5. DIMENSION & KONAMI CODE
 // =========================================
 const dimensionBtn = document.getElementById('dimension-shift');
-if(dimensionBtn) {
+if (dimensionBtn) {
     dimensionBtn.addEventListener('click', (e) => {
         e.preventDefault();
         document.body.classList.toggle('alt-dimension');
@@ -282,36 +296,36 @@ window.addEventListener('scroll', () => {
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     
-    if(scrollHeight > 0) {
+    if (scrollHeight > 0) {
         const scrollPercent = (scrollTop / scrollHeight) * 100;
         const xpBar = document.getElementById('xp-bar');
-        if(xpBar) xpBar.style.width = scrollPercent + '%';
+        if (xpBar) xpBar.style.width = scrollPercent + '%';
     }
     
     const fog = document.querySelector('.fog-of-war');
-    if(fog) {
-        fog.style.transform = "translateY(" + (scrollTop * 0.5) + "px)";
+    if (fog) {
+        fog.style.transform = `translateY(${scrollTop * 0.5}px)`;
         fog.style.opacity = scrollTop > scrollHeight - 300 ? '0' : '1';
     }
 
-    if(crtOverlay) {
+    if (crtOverlay) {
         crtOverlay.classList.add('scrolling');
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => { crtOverlay.classList.remove('scrolling'); }, 150);
     }
     
     document.querySelectorAll('.section, .hero-section').forEach((sec, i) => {
-        if(scrollTop >= sec.offsetTop - 200) {
+        if (scrollTop >= sec.offsetTop - 200) {
             document.querySelectorAll('.map-dot').forEach(d => d.classList.remove('active'));
             const dots = document.querySelectorAll('.map-dot');
-            if(dots[i]) dots[i].classList.add('active');
+            if (dots[i]) dots[i].classList.add('active');
         }
     });
 }, { passive: true });
 
 function triggerAchievement(title, desc) {
     const toast = document.getElementById('achievement-toast');
-    if(toast) {
+    if (toast) {
         toast.querySelector('h4').innerText = title;
         toast.querySelector('p').innerText = desc;
         toast.classList.add('show');
@@ -323,39 +337,39 @@ function triggerAchievement(title, desc) {
 const contactSection = document.getElementById('contact');
 let portfolioExplored = false;
 const achievementObserver = new IntersectionObserver((entries) => {
-    if(entries[0] && entries[0].isIntersecting && !portfolioExplored) {
+    if (entries[0] && entries[0].isIntersecting && !portfolioExplored) {
         portfolioExplored = true;
         const title = document.documentElement.lang === 'fr' ? "SUCCÈS DÉVERROUILLÉ" : "ACHIEVEMENT UNLOCKED";
         const desc = document.documentElement.lang === 'fr' ? "A exploré le portfolio à 100% !" : "Explored the portfolio to 100% !";
         triggerAchievement(title, desc);
     }
 }, { threshold: 0.5 });
-if(contactSection) achievementObserver.observe(contactSection);
+if (contactSection) achievementObserver.observe(contactSection);
 
 document.querySelectorAll('.map-dot').forEach(dot => {
     dot.addEventListener('click', () => {
         const target = document.querySelector(dot.dataset.target);
-        if(target) window.scrollTo({ top: target.offsetTop - 40, behavior: 'smooth' });
+        if (target) window.scrollTo({ top: target.offsetTop - 40, behavior: 'smooth' });
     });
 });
 
 // =========================================
-// 7. SCRAMBLE TEXT (SÉCURISÉ)
+// 7. SCRAMBLE TEXT
 // =========================================
 const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
 function scrambleText(element, force = false) {
-    if(!element || element.classList.contains('no-scramble')) return; 
-    if(element.dataset.scrambled === "true" && !force) return;
+    if (!element || element.classList.contains('no-scramble')) return; 
+    if (element.dataset.scrambled === "true" && !force) return;
     
     const original = element.getAttribute('data-value') || element.innerText;
-    if(!original) return; 
+    if (!original) return; 
     
     element.dataset.scrambled = "true";
     let iterations = 0;
     
     const interval = setInterval(() => {
         element.innerText = original.split("").map((letter, index) => {
-            if(letter === " ") return " ";
+            if (letter === " ") return " ";
             if (index < iterations) return original[index];
             return chars[Math.floor(Math.random() * chars.length)];
         }).join("");
@@ -374,7 +388,7 @@ function scrambleText(element, force = false) {
 const modal = document.getElementById("project-modal");
 
 window.openModal = function(projectId) {
-    if(modal) {
+    if (modal) {
         modal.style.display = "block"; 
         document.body.style.overflow = "hidden";
         
@@ -385,7 +399,7 @@ window.openModal = function(projectId) {
         });
         
         const target = document.getElementById(projectId);
-        if(target) { 
+        if (target) { 
             target.style.display = 'block'; 
             const v = target.querySelector('video'); 
             if (v) { v.play().catch(e => console.log("Autoplay bloqué", e)); } 
@@ -394,11 +408,11 @@ window.openModal = function(projectId) {
 };
 
 window.closeModal = function() {
-    if(modal) {
+    if (modal) {
         modal.style.display = "none"; 
         document.body.style.overflow = "auto"; 
         document.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
-        if(window.resetCyberCamera) window.resetCyberCamera();
+        if (window.resetCyberCamera) window.resetCyberCamera();
     }
 };
 
@@ -408,24 +422,24 @@ window.onclick = function(e) { if (e.target == modal) closeModal(); };
 // 9. BOUTON HERO HYPERSPACE
 // =========================================
 const btnInit = document.getElementById('btn-init');
-if(btnInit) {
+if (btnInit) {
     btnInit.addEventListener('click', function(e) {
         e.preventDefault(); 
         const textSpan = this.querySelector('.btn-text'); 
-        if(!textSpan) return;
+        if (!textSpan) return;
         const original = textSpan.getAttribute('data-value') || textSpan.innerText; 
         let iteration = 0;
         this.classList.add('hyperspace-active');
         const interval = setInterval(() => {
             textSpan.innerText = original.split("").map((l, i) => {
-                if(i < iteration) return original[i]; 
+                if (i < iteration) return original[i]; 
                 return chars[Math.floor(Math.random() * chars.length)];
             }).join("");
-            if(iteration >= original.length) { 
+            if (iteration >= original.length) { 
                 clearInterval(interval); 
                 this.classList.remove('hyperspace-active');
                 const proj = document.querySelector('#projects');
-                if(proj) window.scrollTo({ top: proj.offsetTop - 40, behavior: 'smooth' });
+                if (proj) window.scrollTo({ top: proj.offsetTop - 40, behavior: 'smooth' });
             }
             iteration += 1/3;
         }, 30);
@@ -433,13 +447,12 @@ if(btnInit) {
 }
 
 // ========================================================
-// 10. MOTEUR 3D DES PROJETS (HUD CLAIR & IMAGES)
+// 10. MOTEUR 3D DES PROJETS (CYBERSPACE)
 // ========================================================
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById('cyberspace-container');
     if (!container) return;
 
-    // --- DONNÉES CLAIRES (COULEURS + RÔLES) ---
     const cyberNodes = [
         { id: 'modal-synergy', name: "SYNERGY OS v95.0", category: "PUZZLE / OS SIMULATOR", team: "PROJET SOLO", color: 0x00fff9, css: "var(--cyan)", pos: [0, 0, 5], image: "synergy1.png", roles: ["GAME DESIGN", "LEVEL DESIGN", "UX", "3C"] },
         { id: 'modal-dusked', name: "DUSKED", category: "JEU DE RYTHME", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [-6, 0, -2], image: "dusked1.png", roles: ["GAME DESIGN", "LEVEL DESIGN", "INTÉGRATION"] },
@@ -451,7 +464,6 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: 'modal-ue5', name: "PROJET NON DÉVOILÉ", category: "UNREAL ENGINE 5", team: "PROJET SOLO", color: 0x555555, css: "#888888", pos: [11, 0, -6], image: "", isLocked: true, roles: ["GAME DESIGN", "LEVEL DESIGN", "3C"] }
     ];
 
-    // --- SCÈNE & CAMÉRA ---
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x020205, 0.035);
 
@@ -461,7 +473,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    // OPTIMISATION MOBILE : Ratio max limité à 1.5 pour fluidité
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     container.appendChild(renderer.domElement);
 
@@ -473,12 +484,10 @@ document.addEventListener("DOMContentLoaded", () => {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
 
-    // Sur mobile on désactive la rotation via swipe pour ne pas bloquer le scroll de la page web !
-    if(window.innerWidth < 992) {
+    if (window.innerWidth < 992) {
         controls.enableRotate = false;
     }
 
-    // --- OCÉAN DYNAMIQUE ---
     const gridGeo = new THREE.PlaneGeometry(120, 120, 45, 45);
     const gridMat = new THREE.MeshBasicMaterial({ color: 0x00fff9, wireframe: true, transparent: true, opacity: 0.18 });
     const cyberOcean = new THREE.Mesh(gridGeo, gridMat);
@@ -490,7 +499,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const oceanBaseZ = [];
     for (let i = 0; i < oceanVertices.length; i += 3) { oceanBaseZ.push(oceanVertices[i + 2]); }
 
-    // --- GÉNÉRATION DES PROJETS AVEC HITBOX INVISIBLE ---
     const nodeObjects = [];
     cyberNodes.forEach((node) => {
         const group = new THREE.Group();
@@ -509,7 +517,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const edges = new THREE.EdgesGeometry(baseGeo);
         const lineMat = node.isLocked ? new THREE.LineDashedMaterial({ color: node.color, dashSize: 0.2, gapSize: 0.1 }) : new THREE.LineBasicMaterial({ color: node.color, linewidth: 2 });
         const wireframeBase = new THREE.LineSegments(edges, lineMat);
-        if(node.isLocked) wireframeBase.computeLineDistances();
+        if (node.isLocked) wireframeBase.computeLineDistances();
         baseMesh.add(wireframeBase);
         group.add(baseMesh);
 
@@ -536,13 +544,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const partCount = 800;
     const partGeo = new THREE.BufferGeometry();
     const partPos = new Float32Array(partCount * 3);
-    for(let i = 0; i < partCount * 3; i++) { partPos[i] = (Math.random() - 0.5) * 70; }
+    for (let i = 0; i < partCount * 3; i++) { partPos[i] = (Math.random() - 0.5) * 70; }
     partGeo.setAttribute('position', new THREE.BufferAttribute(partPos, 3));
     const partMat = new THREE.PointsMaterial({ size: 0.12, color: 0x00fff9, transparent: true, opacity: 0.5 });
     const partSystem = new THREE.Points(partGeo, partMat);
     scene.add(partSystem);
 
-    // --- INTERACTIONS & HUD ---
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     let hoveredGroup = null;
@@ -560,7 +567,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.addEventListener('pointermove', (e) => {
         if (isCinematicFlying) return;
         
-        if(Date.now() - lastMoveTime < 30) return;
+        if (Date.now() - lastMoveTime < 30) return;
         lastMoveTime = Date.now();
         
         const rect = container.getBoundingClientRect();
@@ -578,7 +585,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 hoveredGroup = targetObj;
                 const d = hoveredGroup.data;
                 
-                if(!d || !d.name) return; 
+                if (!d || !d.name) return; 
                 
                 hudTargetName.innerText = d.name;
                 hudTargetName.style.color = d.css;
@@ -593,13 +600,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 hudTargetTeam.style.borderColor = d.css;
                 hudTargetTeam.style.boxShadow = `0 0 10px ${d.css} inset`;
                 
-                if(d.roles && d.roles.length > 0 && hudTargetRoles) {
+                if (d.roles && d.roles.length > 0 && hudTargetRoles) {
                     hudTargetRoles.innerHTML = d.roles.map(r => `<span class="cyber-role-tag" style="color:${d.css}; border-color:${d.css};">${r}</span>`).join('');
-                } else if(hudTargetRoles) {
+                } else if (hudTargetRoles) {
                     hudTargetRoles.innerHTML = "";
                 }
                 
-                if(d.image && d.image !== "") {
+                if (d.image && d.image !== "") {
                     hudImg.src = d.image;
                     hudImgContainer.style.display = 'block';
                     hudImgContainer.style.borderColor = d.css;
@@ -608,7 +615,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     hudImgContainer.style.display = 'none';
                 }
                 
-                container.style.cursor = 'pointer';
                 gsap.to(hoveredGroup.group.scale, { x: 1.25, y: 1.25, z: 1.25, duration: 0.3, ease: "back.out(1.7)" });
             }
         } else {
@@ -616,7 +622,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 gsap.to(hoveredGroup.group.scale, { x: 1, y: 1, z: 1, duration: 0.3 });
                 hoveredGroup = null;
                 
-                hudTargetName.innerText = (!isDesktop) ? "SÉLECTIONNEZ UN PROJET" : "SURVOLEZ UN PROJET";
+                hudTargetName.innerText = "SURVOLEZ UN PROJET";
                 hudTargetName.style.color = "var(--cyan)";
                 hudTargetName.style.textShadow = "0 0 15px var(--cyan)";
                 
@@ -624,10 +630,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 hudTargetCat.style.color = "var(--magenta)";
                 
                 hudTargetTeam.style.display = "none";
-                if(hudTargetRoles) hudTargetRoles.innerHTML = "";
+                if (hudTargetRoles) hudTargetRoles.innerHTML = "";
                 hudImgContainer.style.display = 'none';
-                
-                container.style.cursor = 'auto';
             }
         }
     });
@@ -662,8 +666,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    container.addEventListener('click', () => {
-        if (hoveredGroup) flyToNode(hoveredGroup);
+    container.addEventListener('pointerdown', (e) => {
+        if (isCinematicFlying) return;
+        
+        const rect = container.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(nodeObjects.map(n => n.hitbox));
+
+        if (intersects.length > 0) {
+            const hitData = intersects[0].object.userData;
+            const targetObj = nodeObjects.find(n => n.data.id === hitData.id);
+            flyToNode(targetObj);
+        }
     });
 
     window.triggerNodeFly = function(modalId) {
@@ -686,28 +703,25 @@ document.addEventListener("DOMContentLoaded", () => {
             ease: "power3.inOut",
             onUpdate: () => controls.update(),
             onComplete: () => {
-                if(window.innerWidth >= 992) controls.enableRotate = true;
-                
+                if (window.innerWidth >= 992) controls.enableRotate = true;
                 controls.enabled = true;
                 isCinematicFlying = false;
                 hoveredGroup = null;
-                hudTargetName.innerText = (!isDesktop) ? "SÉLECTIONNEZ UN PROJET" : "SURVOLEZ UN PROJET";
+                hudTargetName.innerText = "SURVOLEZ UN PROJET";
                 hudImgContainer.style.display = 'none';
                 hudTargetTeam.style.display = "none";
-                if(hudTargetRoles) hudTargetRoles.innerHTML = "";
+                if (hudTargetRoles) hudTargetRoles.innerHTML = "";
             }
         });
     };
 
-    // --- BOUCLE D'ANIMATION THREE.JS ---
     const clock = new THREE.Clock();
 
     function renderLoop() {
         requestAnimationFrame(renderLoop);
         const time = clock.getElapsedTime();
 
-        // Sur mobile, la scène tourne toute seule pour que le recruteur puisse tout voir facilement
-        if(window.innerWidth < 992 && !isCinematicFlying) {
+        if (window.innerWidth < 992 && !isCinematicFlying) {
             scene.rotation.y += 0.0015;
         }
 
@@ -741,7 +755,7 @@ document.addEventListener("DOMContentLoaded", () => {
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
         
-        if(window.innerWidth < 992) {
+        if (window.innerWidth < 992) {
             controls.enableRotate = false;
         } else {
             controls.enableRotate = true;
