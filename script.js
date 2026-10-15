@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0); 
     document.body.classList.add('booting'); 
 
+    // GESTION DE L'ÉCRAN DE CHARGEMENT
     setTimeout(() => {
         const boot = document.getElementById('boot-screen');
         if(boot) boot.remove(); 
@@ -92,36 +93,40 @@ if(langToggleBtn) {
 }
 
 // =========================================
+// 1.5. ACCORDÉON COMPÉTENCES (SÉCURISÉ)
+// =========================================
+window.toggleSkills = function(id, headerElement) {
+    const content = document.getElementById(id);
+    if(!content) return;
+    
+    if(content.classList.contains('active')) {
+        content.classList.remove('active');
+        headerElement.classList.remove('active');
+    } else {
+        content.classList.add('active');
+        headerElement.classList.add('active');
+    }
+};
+
+// =========================================
 // 2. MOTEUR DU CURSEUR ET PARALLAXE
 // =========================================
 let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
 let dotX = mouseX, dotY = mouseY;
 let ringX = mouseX, ringY = mouseY;
-let isCursorVisible = false, isTouchMode = false;
+let isDesktop = window.matchMedia("(pointer: fine)").matches;
 
 const cursorDot = document.getElementById('cursor-dot');
 const cursorRing = document.getElementById('cursor-ring');
 
-// Détection tactile pour cacher le curseur
-window.addEventListener('touchstart', () => {
-    isTouchMode = true; isCursorVisible = false;
-    if (cursorDot) cursorDot.style.opacity = '0';
-    if (cursorRing) cursorRing.style.opacity = '0';
-}, { passive: true });
-
 window.addEventListener('mousemove', (e) => {
-    // Si c'était du tactile avant, on n'affiche pas la souris suite à un faux event move
-    if (isTouchMode) return; 
+    if (!isDesktop) return; 
     
     if (typeof e.clientX !== 'number' || typeof e.clientY !== 'number') return;
     mouseX = e.clientX; mouseY = e.clientY;
 
-    if (!isCursorVisible) {
-        if (cursorDot) cursorDot.style.opacity = '1';
-        if (cursorRing) cursorRing.style.opacity = '1';
-        dotX = mouseX; dotY = mouseY; ringX = mouseX; ringY = mouseY;
-        isCursorVisible = true;
-    }
+    if (cursorDot) cursorDot.style.opacity = '1';
+    if (cursorRing) cursorRing.style.opacity = '1';
 
     const cyberGrid = document.querySelector('.cyber-grid-container');
     const cyberGlow = document.querySelector('.cyber-grid-glow');
@@ -135,7 +140,7 @@ window.addEventListener('mousemove', (e) => {
 });
 
 function renderCursor() {
-    if (isCursorVisible && !isTouchMode) {
+    if (isDesktop) {
         dotX += (mouseX - dotX) * 0.8;
         dotY += (mouseY - dotY) * 0.8;
         ringX += (mouseX - ringX) * 0.2;
@@ -143,14 +148,17 @@ function renderCursor() {
         
         if (cursorDot) cursorDot.style.transform = "translate3d(" + dotX + "px, " + dotY + "px, 0) translate(-50%, -50%)";
         if (cursorRing) cursorRing.style.transform = "translate3d(" + ringX + "px, " + ringY + "px, 0) translate(-50%, -50%)";
+    } else {
+        if(cursorDot) cursorDot.style.display = 'none';
+        if(cursorRing) cursorRing.style.display = 'none';
     }
     requestAnimationFrame(renderCursor);
 }
 requestAnimationFrame(renderCursor);
 
-const cliquables = 'a, button, .game-box-wrapper, .close-btn, video, iframe, .itch-link, .doc-link, .mag-btn, .hologram-core, .node-chip';
+const cliquables = 'a, button, .game-box-wrapper, .close-btn, video, iframe, .itch-link, .doc-link, .mag-btn, .hologram-core, .node-chip, .shelf-header';
 document.addEventListener('mouseover', (e) => {
-    if (e.target.closest(cliquables) && cursorRing && !isTouchMode) cursorRing.classList.add('hover-active');
+    if (e.target.closest(cliquables) && cursorRing && isDesktop) cursorRing.classList.add('hover-active');
 });
 document.addEventListener('mouseout', (e) => {
     if (e.target.closest(cliquables) && cursorRing) cursorRing.classList.remove('hover-active');
@@ -182,9 +190,7 @@ if(terminal && userTypingArea) {
             typedWord += e.key.toUpperCase();
             
             if(typedWord.includes("HIRE")) {
-                const title = document.documentElement.lang === 'fr' ? "COMPÉTENCE DÉVERROUILLÉE" : "SKILL UNLOCKED";
-                const desc = document.documentElement.lang === 'fr' ? "Embauche imminente !" : "Hiring imminent!";
-                triggerAchievement(title, desc);
+                triggerAchievement("COMPÉTENCE DÉVERROUILLÉE", "Embauche imminente !");
                 typedWord = ""; 
                 userTypingArea.style.color = "#39ff14"; 
             }
@@ -271,7 +277,6 @@ document.addEventListener('keydown', (e) => {
 // =========================================
 const crtOverlay = document.querySelector('.crt-overlay');
 let scrollTimeout;
-let lastScrollY = window.scrollY;
 
 window.addEventListener('scroll', () => {
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -335,22 +340,26 @@ document.querySelectorAll('.map-dot').forEach(dot => {
 });
 
 // =========================================
-// 7. SCRAMBLE TEXT
+// 7. SCRAMBLE TEXT (SÉCURISÉ)
 // =========================================
 const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
 function scrambleText(element, force = false) {
     if(!element || element.classList.contains('no-scramble')) return; 
-    if(element.dataset.scrambled && !force) return;
-    element.dataset.scrambled = "true";
+    if(element.dataset.scrambled === "true" && !force) return;
     
     const original = element.getAttribute('data-value') || element.innerText;
+    if(!original) return; 
+    
+    element.dataset.scrambled = "true";
     let iterations = 0;
+    
     const interval = setInterval(() => {
         element.innerText = original.split("").map((letter, index) => {
             if(letter === " ") return " ";
             if (index < iterations) return original[index];
             return chars[Math.floor(Math.random() * chars.length)];
         }).join("");
+        
         if (iterations >= original.length) { 
             clearInterval(interval); 
             element.innerText = original; 
@@ -424,22 +433,22 @@ if(btnInit) {
 }
 
 // ========================================================
-// 10. MOTEUR 3D DES PROJETS (OPTIMISÉ MOBILE)
+// 10. MOTEUR 3D DES PROJETS (HUD CLAIR & IMAGES)
 // ========================================================
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById('cyberspace-container');
     if (!container) return;
 
-    // --- DONNÉES CLAIRES ---
+    // --- DONNÉES CLAIRES (COULEURS + RÔLES) ---
     const cyberNodes = [
-        { id: 'modal-synergy', name: "SYNERGY OS v95.0", category: "PUZZLE / OS SIMULATOR", team: "PROJET SOLO", color: 0x00fff9, css: "var(--cyan)", pos: [0, 0, 5], image: "synergy1.png" },
-        { id: 'modal-dusked', name: "DUSKED", category: "JEU DE RYTHME", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [-6, 0, -2], image: "dusked1.png" },
-        { id: 'modal-fling', name: "FLING", category: "PLATEFORME 2.5D", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [6, 0, -3], image: "fling1.png" },
-        { id: 'modal-kenjiro', name: "KENJIRO", category: "ONE BUTTON GAME", team: "PROJET SOLO", color: 0x00fff9, css: "var(--cyan)", pos: [-9, 0, 4], image: "kenjiro.png" },
-        { id: 'modal-killer', name: "KILLER SHARK FROM OUTER SPACE", category: "ACTION / BRAWLER", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [9, 0, 4], image: "killer1.png" },
-        { id: 'modal-moonpact', name: "MOON PACT", category: "BOARD GAME", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [-3, 0, -8], image: "moonpact1.png" },
-        { id: 'modal-shapeshooter', name: "SPEC WAR", category: "SHOOTER MOBILE", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [4, 0, -8], image: "shape1.png" },
-        { id: 'modal-ue5', name: "PROJET NON DÉVOILÉ", category: "UNREAL ENGINE 5", team: "PROJET SOLO", color: 0x555555, css: "#888888", pos: [11, 0, -6], image: "", isLocked: true }
+        { id: 'modal-synergy', name: "SYNERGY OS v95.0", category: "PUZZLE / OS SIMULATOR", team: "PROJET SOLO", color: 0x00fff9, css: "var(--cyan)", pos: [0, 0, 5], image: "synergy1.png", roles: ["GAME DESIGN", "LEVEL DESIGN", "UX", "3C"] },
+        { id: 'modal-dusked', name: "DUSKED", category: "JEU DE RYTHME", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [-6, 0, -2], image: "dusked1.png", roles: ["GAME DESIGN", "LEVEL DESIGN", "INTÉGRATION"] },
+        { id: 'modal-fling', name: "FLING", category: "PLATEFORME 2.5D", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [6, 0, -3], image: "fling1.png", roles: ["LEVEL DESIGN", "GAME DESIGN", "INTÉGRATION"] },
+        { id: 'modal-kenjiro', name: "KENJIRO", category: "ONE BUTTON GAME", team: "PROJET SOLO", color: 0x00fff9, css: "var(--cyan)", pos: [-9, 0, 4], image: "kenjiro.png", roles: ["GAME DESIGN", "LEVEL DESIGN", "VS", "3C"] },
+        { id: 'modal-killer', name: "KILLER SHARK FROM OUTER SPACE", category: "ACTION / BRAWLER", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [9, 0, 4], image: "killer1.png", roles: ["COMBAT DESIGN", "GAME FEEL", "JUICE"] },
+        { id: 'modal-moonpact', name: "MOON PACT", category: "BOARD GAME", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [-3, 0, -8], image: "moonpact1.png", roles: ["GAME DESIGN", "ÉQUILIBRAGE"] },
+        { id: 'modal-shapeshooter', name: "SPEC WAR", category: "SHOOTER MOBILE", team: "PROJET DE GROUPE", color: 0xff00c1, css: "var(--magenta)", pos: [4, 0, -8], image: "shape1.png", roles: ["GAME DESIGN", "MONÉTISATION"] },
+        { id: 'modal-ue5', name: "PROJET NON DÉVOILÉ", category: "UNREAL ENGINE 5", team: "PROJET SOLO", color: 0x555555, css: "#888888", pos: [11, 0, -6], image: "", isLocked: true, roles: ["GAME DESIGN", "LEVEL DESIGN", "3C"] }
     ];
 
     // --- SCÈNE & CAMÉRA ---
@@ -452,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    // OPTIMISATION MOBILE : Ratio max limité à 1.5 pour garder 60fps
+    // OPTIMISATION MOBILE : Ratio max limité à 1.5 pour fluidité
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     container.appendChild(renderer.domElement);
 
@@ -463,6 +472,11 @@ document.addEventListener("DOMContentLoaded", () => {
     controls.minPolarAngle = Math.PI / 6;
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
+
+    // Sur mobile on désactive la rotation via swipe pour ne pas bloquer le scroll de la page web !
+    if(window.innerWidth < 992) {
+        controls.enableRotate = false;
+    }
 
     // --- OCÉAN DYNAMIQUE ---
     const gridGeo = new THREE.PlaneGeometry(120, 120, 45, 45);
@@ -483,7 +497,7 @@ document.addEventListener("DOMContentLoaded", () => {
         group.position.set(node.pos[0], node.pos[1], node.pos[2]);
 
         const hitboxGeo = new THREE.SphereGeometry(3.5, 16, 16);
-        const hitboxMat = new THREE.MeshBasicMaterial({ visible: false });
+        const hitboxMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
         const hitbox = new THREE.Mesh(hitboxGeo, hitboxMat);
         hitbox.userData = node; 
         group.add(hitbox);
@@ -528,7 +542,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const partSystem = new THREE.Points(partGeo, partMat);
     scene.add(partSystem);
 
-    // --- INTERACTIONS ---
+    // --- INTERACTIONS & HUD ---
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     let hoveredGroup = null;
@@ -537,12 +551,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const hudTargetName = document.getElementById('cyber-target-name');
     const hudTargetCat = document.getElementById('cyber-target-cat');
     const hudTargetTeam = document.getElementById('cyber-target-team');
+    const hudTargetRoles = document.getElementById('cyber-target-roles');
     const hudImgContainer = document.getElementById('cyber-image-container');
     const hudImg = document.getElementById('cyber-hud-image');
 
-    // Sur Mobile, un tap déclenchera move puis down. Sur Desktop, la souris survole.
+    let lastMoveTime = 0;
+
     container.addEventListener('pointermove', (e) => {
         if (isCinematicFlying) return;
+        
+        if(Date.now() - lastMoveTime < 30) return;
+        lastMoveTime = Date.now();
+        
         const rect = container.getBoundingClientRect();
         mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
         mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
@@ -558,6 +578,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 hoveredGroup = targetObj;
                 const d = hoveredGroup.data;
                 
+                if(!d || !d.name) return; 
+                
                 hudTargetName.innerText = d.name;
                 hudTargetName.style.color = d.css;
                 hudTargetName.style.textShadow = `0 0 15px ${d.css}`;
@@ -571,6 +593,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 hudTargetTeam.style.borderColor = d.css;
                 hudTargetTeam.style.boxShadow = `0 0 10px ${d.css} inset`;
                 
+                if(d.roles && d.roles.length > 0 && hudTargetRoles) {
+                    hudTargetRoles.innerHTML = d.roles.map(r => `<span class="cyber-role-tag" style="color:${d.css}; border-color:${d.css};">${r}</span>`).join('');
+                } else if(hudTargetRoles) {
+                    hudTargetRoles.innerHTML = "";
+                }
+                
                 if(d.image && d.image !== "") {
                     hudImg.src = d.image;
                     hudImgContainer.style.display = 'block';
@@ -580,7 +608,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     hudImgContainer.style.display = 'none';
                 }
                 
-                if (cursorRing && !isTouchMode) cursorRing.classList.add('hover-active');
+                container.style.cursor = 'pointer';
                 gsap.to(hoveredGroup.group.scale, { x: 1.25, y: 1.25, z: 1.25, duration: 0.3, ease: "back.out(1.7)" });
             }
         } else {
@@ -588,7 +616,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 gsap.to(hoveredGroup.group.scale, { x: 1, y: 1, z: 1, duration: 0.3 });
                 hoveredGroup = null;
                 
-                hudTargetName.innerText = isTouchMode ? "SÉLECTIONNEZ UN PROJET" : "SURVOLEZ UN PROJET";
+                hudTargetName.innerText = (!isDesktop) ? "SÉLECTIONNEZ UN PROJET" : "SURVOLEZ UN PROJET";
                 hudTargetName.style.color = "var(--cyan)";
                 hudTargetName.style.textShadow = "0 0 15px var(--cyan)";
                 
@@ -596,9 +624,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 hudTargetCat.style.color = "var(--magenta)";
                 
                 hudTargetTeam.style.display = "none";
+                if(hudTargetRoles) hudTargetRoles.innerHTML = "";
                 hudImgContainer.style.display = 'none';
                 
-                if (cursorRing) cursorRing.classList.remove('hover-active');
+                container.style.cursor = 'auto';
             }
         }
     });
@@ -606,6 +635,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function flyToNode(targetObj) {
         if (isCinematicFlying || !targetObj) return;
         const d = targetObj.data;
+        if (!d) return;
+        
         isCinematicFlying = true;
         controls.enabled = false;
 
@@ -631,23 +662,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Le clic/tap confirme l'action
-    // Renforcement pour mobile : on refait un raycast au moment du "down"
-    container.addEventListener('pointerdown', (e) => {
-        if (isCinematicFlying) return;
-        
-        const rect = container.getBoundingClientRect();
-        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-
-        raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(nodeObjects.map(n => n.hitbox));
-
-        if (intersects.length > 0) {
-            const hitData = intersects[0].object.userData;
-            const targetObj = nodeObjects.find(n => n.data.id === hitData.id);
-            flyToNode(targetObj);
-        }
+    container.addEventListener('click', () => {
+        if (hoveredGroup) flyToNode(hoveredGroup);
     });
 
     window.triggerNodeFly = function(modalId) {
@@ -670,12 +686,15 @@ document.addEventListener("DOMContentLoaded", () => {
             ease: "power3.inOut",
             onUpdate: () => controls.update(),
             onComplete: () => {
+                if(window.innerWidth >= 992) controls.enableRotate = true;
+                
                 controls.enabled = true;
                 isCinematicFlying = false;
                 hoveredGroup = null;
-                hudTargetName.innerText = isTouchMode ? "SÉLECTIONNEZ UN PROJET" : "SURVOLEZ UN PROJET";
+                hudTargetName.innerText = (!isDesktop) ? "SÉLECTIONNEZ UN PROJET" : "SURVOLEZ UN PROJET";
                 hudImgContainer.style.display = 'none';
                 hudTargetTeam.style.display = "none";
+                if(hudTargetRoles) hudTargetRoles.innerHTML = "";
             }
         });
     };
@@ -686,6 +705,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderLoop() {
         requestAnimationFrame(renderLoop);
         const time = clock.getElapsedTime();
+
+        // Sur mobile, la scène tourne toute seule pour que le recruteur puisse tout voir facilement
+        if(window.innerWidth < 992 && !isCinematicFlying) {
+            scene.rotation.y += 0.0015;
+        }
 
         const positions = cyberOcean.geometry.attributes.position;
         for (let i = 0; i < positions.count; i++) {
@@ -716,5 +740,12 @@ document.addEventListener("DOMContentLoaded", () => {
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
+        
+        if(window.innerWidth < 992) {
+            controls.enableRotate = false;
+        } else {
+            controls.enableRotate = true;
+            scene.rotation.y = 0; 
+        }
     });
 });

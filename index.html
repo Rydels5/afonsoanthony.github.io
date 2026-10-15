@@ -17,6 +17,12 @@
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
 
+    <!-- BOUTONS SOCIAUX PERSISTANTS -->
+    <div class="fixed-socials">
+        <a href="https://www.linkedin.com/in/anthony-afonso-a9272225b/" target="_blank" class="cyber-icon-btn mag-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="STAGECV.pdf" target="_blank" class="cyber-icon-btn mag-btn" title="Curriculum Vitae (PDF)"><i class="fa-solid fa-file-pdf"></i></a>
+    </div>
+
     <!-- UI GAMIFICATION -->
     <div id="xp-bar-container"><div id="xp-bar"></div></div>
     
@@ -28,23 +34,23 @@
         </div>
     </div>
     
-    <!-- MINIMAP NAV -->
+    <!-- MINIMAP NAV (Ordre mis à jour) -->
     <div id="mini-map">
         <div class="map-dot active" data-target="#about"></div>
         <div class="map-dot" data-target="#skills"></div>
-        <div class="map-dot" data-target="#projects"></div>
         <div class="map-dot" data-target="#experience"></div>
+        <div class="map-dot" data-target="#projects"></div>
         <div class="map-dot" data-target="#background"></div>
         <div class="map-dot" data-target="#contact"></div>
     </div>
 
-    <!-- BARRE DE NAVIGATION -->
+    <!-- BARRE DE NAVIGATION (Ordre mis à jour) -->
     <nav id="navbar">
         <ul class="nav-links">
             <li><a href="#about" class="mag-btn lang-nav" data-fr="Accueil" data-en="Home" data-label="Accueil"><i class="fa-solid fa-house"></i></a></li>
             <li><a href="#skills" class="mag-btn lang-nav" data-fr="Compétences" data-en="Skills" data-label="Compétences"><i class="fa-solid fa-gamepad"></i></a></li>
-            <li><a href="#projects" class="mag-btn lang-nav" data-fr="Projets" data-en="Projects" data-label="Projets"><i class="fa-solid fa-layer-group"></i></a></li>
             <li><a href="#experience" class="mag-btn lang-nav" data-fr="Expérience" data-en="Experience" data-label="Expérience"><i class="fa-solid fa-briefcase"></i></a></li>
+            <li><a href="#projects" class="mag-btn lang-nav" data-fr="Projets" data-en="Projects" data-label="Projets"><i class="fa-solid fa-layer-group"></i></a></li>
             <li><a href="#background" class="mag-btn lang-nav" data-fr="Parcours" data-en="Journey" data-label="Parcours"><i class="fa-solid fa-graduation-cap"></i></a></li>
             <li><a href="#contact" class="mag-btn lang-nav" data-fr="Contact" data-en="Contact" data-label="Contact"><i class="fa-solid fa-envelope"></i></a></li>
             <li><a href="#" id="dimension-shift" class="mag-btn lang-nav" data-fr="Dimension" data-en="Dimension" data-label="Dimension"><i class="fa-solid fa-bullseye"></i></a></li>
@@ -127,38 +133,76 @@
             </div>
         </header>
 
-        <!-- SKILLS SECTION -->
+        <!-- SKILLS SECTION (Nouveau Design Interactif en 3 Blocs) -->
         <section id="skills" class="section">
             <div class="section-header reveal"><span class="number">01</span><h2 class="scramble-title lang-txt" data-fr="COMPÉTENCES / ACQUISITIONS" data-en="SKILLS / ACQUISITIONS">COMPÉTENCES / ACQUISITIONS</h2></div>
+            
             <div class="skills-inventory">
+                
+                <!-- BLOC 1 : TECH & MOTEURS -->
                 <div class="shelf reveal">
-                    <h3 class="shelf-title tech-title scramble-title lang-txt" data-fr="TECH & MOTEURS" data-en="TECH & ENGINES">TECH & MOTEURS</h3>
-                    <div class="game-box-container">
-                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">UNITY</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">UNREAL ENGINE</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">VS / SCRIPTING</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">GIT / FORK</span></div><div class="box-face side"></div></div></div>
+                    <div class="shelf-header" onclick="toggleSkills('tech-skills', this)">
+                        <h3 class="shelf-title tech-title lang-txt" data-fr="TECH & MOTEURS" data-en="TECH & ENGINES">TECH & MOTEURS</h3>
+                        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="skills-content" id="tech-skills">
+                        <div class="game-box-container">
+                            <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">UNITY</span></div><div class="box-face side"></div></div></div>
+                            <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">UNREAL ENGINE</span></div><div class="box-face side"></div></div></div>
+                            <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">VS / SCRIPTING</span></div><div class="box-face side"></div></div></div>
+                            <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">GIT / FORK</span></div><div class="box-face side"></div></div></div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- BLOC 2 : DESIGN -->
                 <div class="shelf reveal">
-                    <h3 class="shelf-title design-title scramble-title">DESIGN</h3>
-                    <div class="game-box-container">
-                        <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">GAME DESIGN</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">LEVEL DESIGN</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">UX / UI</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">QA TEST</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">SYSTEM DESIGN</span></div><div class="box-face side"></div></div></div>
+                    <div class="shelf-header" onclick="toggleSkills('design-skills', this)">
+                        <h3 class="shelf-title design-title lang-txt" data-fr="DESIGN" data-en="DESIGN">DESIGN</h3>
+                        <i class="fa-solid fa-chevron-down toggle-icon" style="color: var(--magenta);"></i>
+                    </div>
+                    <div class="skills-content" id="design-skills">
+                        <div class="game-box-container">
+                            <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">GAME DESIGN</span></div><div class="box-face side"></div></div></div>
+                            <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">LEVEL DESIGN</span></div><div class="box-face side"></div></div></div>
+                            <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">UX / UI</span></div><div class="box-face side"></div></div></div>
+                            <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">QA TEST</span></div><div class="box-face side"></div></div></div>
+                            <div class="game-box-wrapper tilt-box"><div class="game-box magenta"><div class="box-face front"><span class="box-title">SYSTEM DESIGN</span></div><div class="box-face side"></div></div></div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- BLOC 3 : OUTILS -->
                 <div class="shelf reveal">
-                    <h3 class="shelf-title tools-title scramble-title lang-txt" data-fr="OUTILS" data-en="TOOLS">OUTILS</h3>
-                    <div class="game-box-container">
-                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FIGMA</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">EXCEL</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FL STUDIO</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">PHOTOSHOP</span></div><div class="box-face side"></div></div></div>
-                        <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">CAPCUT</span></div><div class="box-face side"></div></div></div>
+                    <div class="shelf-header" onclick="toggleSkills('tools-skills', this)">
+                        <h3 class="shelf-title tools-title lang-txt" data-fr="OUTILS" data-en="TOOLS">OUTILS</h3>
+                        <i class="fa-solid fa-chevron-down toggle-icon" style="color: #fff;"></i>
                     </div>
+                    <div class="skills-content" id="tools-skills">
+                        <div class="game-box-container">
+                            <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FIGMA</span></div><div class="box-face side"></div></div></div>
+                            <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">EXCEL</span></div><div class="box-face side"></div></div></div>
+                            <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">FL STUDIO</span></div><div class="box-face side"></div></div></div>
+                            <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">PHOTOSHOP</span></div><div class="box-face side"></div></div></div>
+                            <div class="game-box-wrapper tilt-box"><div class="game-box cyan"><div class="box-face front"><span class="box-title">CAPCUT</span></div><div class="box-face side"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION EXPERIENCES PRO (Remontée ici) -->
+        <section id="experience" class="section">
+            <div class="section-header reveal"><span class="number">02</span><h2 class="scramble-title lang-txt" data-fr="EXPÉRIENCE PRO" data-en="WORK EXPERIENCE">EXPÉRIENCE PRO</h2></div>
+            <div class="timeline reveal">
+                <div class="timeline-item cyan-timeline tilt-card mag-btn" onclick="openModal('modal-babasport')" style="cursor: pointer; padding: 20px; border: 1px solid rgba(0,255,249,0.3); border-radius: 8px; background: rgba(0,255,249,0.05); transition: 0.3s; margin-left: -20px;">
+                    <span class="date">2026</span>
+                    <h3 class="lang-txt" data-fr="Stage Game Design" data-en="Game Design Internship">
+                        Stage Game Design <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.6em; vertical-align: middle; margin-left: 10px;"></i>
+                    </h3>
+                    <p class="school"><strong>Babasport</strong></p>
+                    <p class="lang-txt" data-fr="Découverte du milieu professionnel. Cliquez pour voir mes créations et documents de stage." data-en="Discovery of the professional environment. Click to view creations and internship docs.">Découverte du milieu professionnel. Cliquez pour voir mes créations et documents de stage.</p>
                 </div>
             </div>
         </section>
@@ -168,7 +212,7 @@
              ======================================================== -->
         <section id="projects" class="section cyberspace-section">
             <div class="section-header reveal">
-                <span class="number">02</span>
+                <span class="number">03</span>
                 <h2 class="scramble-title lang-txt" data-fr="PROJETS" data-en="PROJECTS">PROJETS</h2>
             </div>
             
@@ -192,6 +236,9 @@
                             <div id="cyber-target-name">SURVOLEZ UN PROJET</div>
                             <div id="cyber-target-cat">// EN ATTENTE //</div>
                             <div id="cyber-target-team" style="display: none; margin-top: 10px; font-weight: bold; font-family: var(--font-code); font-size: 0.8rem; padding: 4px 8px; border-radius: 4px; border: 1px solid;"></div>
+                            
+                            <!-- NOUVEAU : AFFICHAGE DES RÔLES/COMPÉTENCES AU SURVOL -->
+                            <div id="cyber-target-roles" class="cyber-roles-container"></div>
                         </div>
                     </div>
                     
@@ -204,10 +251,10 @@
                             <button class="node-chip" onclick="triggerNodeFly('modal-killer')">05 SHARK</button>
                             <button class="node-chip" onclick="triggerNodeFly('modal-moonpact')">06 MOON</button>
                             <button class="node-chip" onclick="triggerNodeFly('modal-shapeshooter')">07 SPEC WAR</button>
-                            <button class="node-chip" onclick="triggerNodeFly('modal-ue5')" style="color: #888; border-color: #555;">08 UE5 (SECRET)</button>
+                            <button class="node-chip" onclick="triggerNodeFly('modal-ue5')" style="color: #888; border-color: #555;">08 UE5 (EN COURS)</button>
                         </div>
                         <div id="cyber-controls-hint">
-                            <span><i class="fa-solid fa-arrows-up-down-left-right"></i> DRAG : PIVOTER</span>
+                            <span><i class="fa-solid fa-arrows-up-down-left-right"></i> GLISSER : PIVOTER</span>
                             <span><i class="fa-solid fa-hand-pointer"></i> CLIC : OUVRIR</span>
                         </div>
                     </div>
@@ -215,21 +262,6 @@
 
                 <!-- CONTENEUR 3D CANVAS THREE.JS -->
                 <div id="cyberspace-container"></div>
-            </div>
-        </section>
-
-        <!-- SECTION EXPERIENCES PRO -->
-        <section id="experience" class="section">
-            <div class="section-header reveal"><span class="number">03</span><h2 class="scramble-title lang-txt" data-fr="EXPÉRIENCE PRO" data-en="WORK EXPERIENCE">EXPÉRIENCE PRO</h2></div>
-            <div class="timeline reveal">
-                <div class="timeline-item cyan-timeline tilt-card mag-btn" onclick="openModal('modal-babasport')" style="cursor: pointer; padding: 20px; border: 1px solid rgba(0,255,249,0.3); border-radius: 8px; background: rgba(0,255,249,0.05); transition: 0.3s; margin-left: -20px;">
-                    <span class="date">2026</span>
-                    <h3 class="lang-txt" data-fr="Stage Game Design" data-en="Game Design Internship">
-                        Stage Game Design <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.6em; vertical-align: middle; margin-left: 10px;"></i>
-                    </h3>
-                    <p class="school"><strong>Babasport</strong></p>
-                    <p class="lang-txt" data-fr="Découverte du milieu professionnel. Cliquez pour voir mes créations et documents de stage." data-en="Discovery of the professional environment. Click to view creations and internship docs.">Découverte du milieu professionnel. Cliquez pour voir mes créations et documents de stage.</p>
-                </div>
             </div>
         </section>
 
@@ -279,7 +311,7 @@
                 <h2 class="modal-title magenta-text">DUSKED</h2>
                 <div class="modal-divider magenta-bg"></div>
                 <div class="video-container magenta-border"><video controls playsinline class="project-video"><source src="dusked1.mp4" type="video/mp4"></video></div>
-                <p class="lang-txt" data-fr="Une sombre nuit d’automne, Luna ne trouvait pas le sommeil, elle décida donc de changer ses pensées néfastes en sortant de chez elle. Cependant, rongée par l'empreinte de ses traumatismes, elle trouva réconfort auprès de son meilleur ami imaginaire afin de ne pas se laisser ronger par la colère, la culpabilité et les remords de son passé.<br><br>Dans Dusked, vous incarnez l’ami imaginaire de Luna et vous devez la protéger des ombres représentant l’empreinte de ses traumas passés. Attaquez sur le rythme de la musique dans ce jeu musical." data-en="On a dark autumn night, Luna couldn't sleep...">Une sombre nuit d’automne, Luna ne trouvait pas le sommeil, elle décida donc de changer ses pensées néfastes en sortant de chez elle. Cependant, rongée par l'empreinte de ses traumatismes, elle trouva réconfort auprès de son meilleur ami imaginaire afin de ne pas se laisser ronger par la colère, la culpabilité et les remords de son passé.<br><br>Dans Dusked, vous incarnez l’ami imaginaire de Luna et vous devez la protéger des ombres représentant l’empreinte de ses traumas passés. Attaquez sur le rythme de la musique dans ce jeu musical.</p>
+                <p class="lang-txt" data-fr="Une sombre nuit d’automne, Luna ne trouvait pas le sommeil..." data-en="On a dark autumn night, Luna couldn't sleep...">Une sombre nuit d’automne, Luna ne trouvait pas le sommeil, elle décida donc de changer ses pensées néfastes en sortant de chez elle. Cependant, rongée par l'empreinte de ses traumatismes, elle trouva réconfort auprès de son meilleur ami imaginaire afin de ne pas se laisser ronger par la colère, la culpabilité et les remords de son passé.<br><br>Dans Dusked, vous incarnez l’ami imaginaire de Luna et vous devez la protéger des ombres représentant l’empreinte de ses traumas passés. Attaquez sur le rythme de la musique dans ce jeu musical.</p>
                 
                 <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--magenta); font-family: var(--font-heading);"><i class="fa-solid fa-folder-open"></i> DOCUMENTS UTILES</h3>
                 <div class="modal-link-container" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
